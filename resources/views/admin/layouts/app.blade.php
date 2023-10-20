@@ -11,6 +11,7 @@
 		<!-- Theme style -->
 		<link rel="stylesheet" href="{{ asset('admin-assets/css/adminlte.min.css') }}">
 		<link rel="stylesheet" href="{{ asset('admin-assets/css/custom.css') }}">
+		<meta name="csrf-token" content="{{ csrf_token() }}">
 	</head>
 	<body class="hold-transition sidebar-mini">
 		<!-- Site wrapper -->
@@ -44,15 +45,15 @@
 							<div class="mb-3">{{ Auth::guard('admin')->user()->email }}</div>
 							<div class="dropdown-divider"></div>
 							<a href="#" class="dropdown-item">
-								<i class="fas fa-user-cog mr-2"></i> Settings								
+								<i class="fas fa-user-cog mr-2"></i> Configurações								
 							</a>
 							<div class="dropdown-divider"></div>
 							<a href="#" class="dropdown-item">
-								<i class="fas fa-lock mr-2"></i> Change Password
+								<i class="fas fa-lock mr-2"></i> Mudar senha
 							</a>
 							<div class="dropdown-divider"></div>
 							<a href="{{ route('admin.logout') }}" class="dropdown-item text-danger">
-								<i class="fas fa-sign-out-alt mr-2"></i> Logout							
+								<i class="fas fa-sign-out-alt mr-2"></i> Desconectar							
 							</a>							
 						</div>
 					</li>
@@ -70,7 +71,7 @@
 			<!-- /.content-wrapper -->
 			<footer class="main-footer">
 				
-				<strong>Copyright &copy; 2014-2022 AmazingShop All rights reserved.
+				<strong>Copyright &copy; 2021-2023 Hidromax materiais para construção todos os direitos reservados.
 			</footer>
 			
 		</div>
@@ -83,6 +84,14 @@
 		<script src="{{ asset('admin-assets/js/adminlte.min.js') }}"></script>
 		<!-- AdminLTE for demo purposes -->
 		<script src="{{ asset('admin-assets/js/adminlte.min.js') }}"></script>
+
+		<script type="text/javascript">
+			$.ajaxSetup({
+				headers: {
+					'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+				}
+			});
+		</script>
 
         @yield('customJs')
 	</body>
