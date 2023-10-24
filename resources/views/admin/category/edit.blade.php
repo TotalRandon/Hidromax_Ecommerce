@@ -6,7 +6,7 @@
     <div class="container-fluid my-2">
         <div class="row mb-2">
             <div class="col-sm-6">
-                <h1>Criar categoria</h1>
+                <h1>Editar categoria</h1>
             </div>
             <div class="col-sm-6 text-right">
                 <a href="{{ route('categories.index') }}" class="btn btn-primary">Voltar</a>
@@ -19,21 +19,21 @@
 <section class="content">
     <!-- Default box -->
     <div class="container-fluid">
-        <form action="" method="post" id="categoryForm" name="categoryForm">
+        <form action="" method="put" id="categoryForm" name="categoryForm">
             <div class="card">
                 <div class="card-body">								
                 <div class="row">
                     <div class="col-md-6">
                         <div class="mb-3">
                             <label for="name">Nome</label>
-                            <input type="text" name="name" id="name" class="form-control" placeholder="Nome">
+                            <input type="text" name="name" id="name" class="form-control" placeholder="Nome" value="{{ $category->name }}">
                             <p></p>	
                         </div>
                     </div>
                     <div class="col-md-6">
                         <div class="mb-3">
                             <label for="slug">Slug</label>
-                            <input type="text" readonly name="slug" id="slug" class="form-control" placeholder="Slug">
+                            <input type="text" readonly name="slug" id="slug" class="form-control" placeholder="Slug" value="{{ $category->slug }}">
                             <p></p>	
                         </div>
                     </div>
@@ -41,21 +41,26 @@
                     <div class="col-md-6">
                         <div class="mb-3">
                             <input type="hidden" id="image_id" name="image_id" value="">
-                            <label for="image">Image</label>
+                            <label for="image">Imagem</label>
                             <div id="image" class="dropzone dz-clickable">
                                 <div class="dz-message needsclick">
-                                    <br>Drop files here or click to upload.<br><br>
+                                    <br>Arraste aqui sua imagem ou faça upload clicando aqui.<br><br>
                                 </div>
                             </div>
                         </div>
+                        @if (!empty($category->image))
+                        <div>
+                            <img width="250" src="{{ asset('uploads/category/thumb/'.$category->image) }}" alt="">
+                        </div>
+                        @endif
                     </div>
 
                     <div class="col-md-6">
                         <div class="mb-3">
                             <label for="status">Status</label>
                             <select name="status" id="status" class="form-control">
-                                <option value="1">Ativado</option>    
-                                <option value="0">Bloqueado</option>    
+                                <option {{ ($category->status == 1) ? 'selected' : '' }} value="1">Ativado</option>    
+                                <option {{ ($category->status == 0) ? 'selected' : '' }} value="0">Desativado</option>    
                             </select>	
                         </div>
                     </div>									
@@ -63,7 +68,7 @@
                 </div>							
             </div>
             <div class="pb-5 pt-3">
-                <button type="submit" class="btn btn-primary">Criar</button>
+                <button type="submit" class="btn btn-primary">Atualizar</button>
                 <a href="{{ route('categories.index') }}" class="btn btn-outline-dark ml-3">Cancelar</a>
             </div>
         </form>
@@ -80,8 +85,8 @@ $("#categoryForm").submit(function(event){
     var element = $(this);
     $("button[type=submit]").prop('disabled', true);
     $.ajax({
-        url: '{{ route("categories.store") }}',
-        type: 'post',
+        url: '{{ route("categories.update", $category->id) }}',
+        type: 'put',
         data: element.serializeArray(),
         dataType: 'json',
         success: function(response){
@@ -100,6 +105,11 @@ $("#categoryForm").submit(function(event){
                 .addClass('invalid-feedbacks').html("");
 
             } else {
+
+                if(response['notFound'] == true) {
+                    window.location.href="{{ route('categories.index') }}";
+                }
+
                 var errors = response['errors'];
                 if(errors['name']) {
                     $("#name").addClass('is-invalid')
