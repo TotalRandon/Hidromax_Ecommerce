@@ -20,13 +20,13 @@
                 <li class="nav-item">
                     <a href="{{ route('categories.index') }}" class="nav-link">
                         <i class="nav-icon fas fa-file-alt"></i>
-                        <p>Category</p>
+                        <p>Categoria</p>
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a href="subcategory.html" class="nav-link">
+                    <a href="{{ route('sub-categories.index') }}" class="nav-link">
                         <i class="nav-icon fas fa-file-alt"></i>
-                        <p>Sub Category</p>
+                        <p>Sub Categoria</p>
                     </a>
                 </li>
                 <li class="nav-item">
@@ -34,13 +34,13 @@
                         <svg class="h-6 nav-icon w-6 shrink-0" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" aria-hidden="true">
                             <path stroke-linecap="round" stroke-linejoin="round" d="M16 4v12l-4-2-4 2V4M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
                           </svg>
-                        <p>Brands</p>
+                        <p>Marcas</p>
                     </a>
                 </li>
                 <li class="nav-item">
                     <a href="products.html" class="nav-link">
                         <i class="nav-icon fas fa-tag"></i>
-                        <p>Products</p>
+                        <p>Produtos</p>
                     </a>
                 </li>
                 
@@ -48,31 +48,31 @@
                     <a href="#" class="nav-link">
                         <!-- <i class="nav-icon fas fa-tag"></i> -->
                         <i class="fas fa-truck nav-icon"></i>
-                        <p>Shipping</p>
+                        <p>Entregas</p>
                     </a>
                 </li>							
                 <li class="nav-item">
                     <a href="orders.html" class="nav-link">
                         <i class="nav-icon fas fa-shopping-bag"></i>
-                        <p>Orders</p>
+                        <p>Pedidos</p>
                     </a>
                 </li>
                 <li class="nav-item">
                     <a href="discount.html" class="nav-link">
                         <i class="nav-icon  fa fa-percent" aria-hidden="true"></i>
-                        <p>Discount</p>
+                        <p>Descontos</p>
                     </a>
                 </li>
                 <li class="nav-item">
                     <a href="users.html" class="nav-link">
                         <i class="nav-icon  fas fa-users"></i>
-                        <p>Users</p>
+                        <p>Usuários</p>
                     </a>
                 </li>
                 <li class="nav-item">
                     <a href="pages.html" class="nav-link">
                         <i class="nav-icon  far fa-file-alt"></i>
-                        <p>Pages</p>
+                        <p>Paginas</p>
                     </a>
                 </li>							
             </ul>

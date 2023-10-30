@@ -18,10 +18,10 @@
             @include('admin.message')
 			<div class="card card-outline card-primary">
 			  	<div class="card-header text-center">
-					<a href="#" class="h3">Administrative Panel</a>
+					<a href="#" class="h3">Painel Administrativo</a>
 			  	</div>
 			  	<div class="card-body">
-					<p class="login-box-msg">Sign in to start your session</p>
+					<p class="login-box-msg">Faça login para entrar na sessão</p>
 					<form action="{{ route('admin.authenticate') }}" method="post">
                         @csrf
 				  		<div class="input-group mb-3">
@@ -36,7 +36,7 @@
                             @enderror
 				  		</div>
 				  		<div class="input-group mb-3">
-							<input type="password" name="password" id="password" class="form-control  @error('password') is-invalid @enderror" placeholder="Password">
+							<input type="password" name="password" id="password" class="form-control  @error('password') is-invalid @enderror" placeholder="Senha">
 							<div class="input-group-append">
 					  			<div class="input-group-text">
 									<span class="fas fa-lock"></span>
@@ -63,7 +63,7 @@
 				  		</div>
 					</form>
 		  			<p class="mb-1 mt-3">
-				  		<a href="forgot-password.html">I forgot my password</a>
+				  		<a href="forgot-password.html">Esqueci minha senha</a>
 					</p>					
 			  	</div>
 			  	<!-- /.card-body -->
