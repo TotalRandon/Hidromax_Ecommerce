@@ -6,7 +6,7 @@
     <div class="container-fluid my-2">
         <div class="row mb-2">
             <div class="col-sm-6">
-                <h1>Criar Subcategoria</h1>
+                <h1>Editar Sub Categoria</h1>
             </div>
             <div class="col-sm-6 text-right">
                 <a href="{{ route('sub-categories.index') }}" class="btn btn-primary">Voltar</a>
@@ -19,7 +19,7 @@
 <section class="content">
     <!-- Default box -->
     <div class="container-fluid">
-        <form action="" method="post" name="subCategoryForm" id="subCategoryForm">
+        <form action="" method="put" name="subCategoryForm" id="subCategoryForm">
         <div class="card">
             <div class="card-body">								
                 <div class="row">
@@ -27,10 +27,10 @@
                         <div class="mb-3">
                             <label for="name">Categoria</label>
                             <select name="category" id="category" class="form-control">
-                                <option value="">Selecione uma categoria</option>
+                                <option value="">selecione uma categoria</option>
                                 @if ($categories->isNotEmpty())
                                 @foreach ($categories as $category)
-                                    <option value="{{ $category->id }}">{{ $category->name }}</option>
+                                    <option {{ ($subCategory->category_id == $category->id) ? 'selected' : '' }} value="{{ $category->id }}">{{ $category->name }}</option>
                                 @endforeach
                                 @endif
                             </select>
@@ -40,14 +40,14 @@
                     <div class="col-md-6">
                         <div class="mb-3">
                             <label for="name">Nome</label>
-                            <input type="text" name="name" id="name" class="form-control" placeholder="Name">
+                            <input type="text" name="name" id="name" class="form-control" placeholder="Name" value="{{ $subCategory->name }}">
                             <p></p>	
                         </div>
                     </div>
                     <div class="col-md-6">
                         <div class="mb-3">
                             <label for="slug">Slug</label>
-                            <input type="text" readonly name="slug" id="slug" class="form-control" placeholder="Slug">
+                            <input type="text" readonly name="slug" id="slug" class="form-control" placeholder="Slug" value="{{ $subCategory->slug }}">
                             <p></p>	
                         </div>
                     </div>
@@ -55,8 +55,8 @@
                         <div class="mb-3">
                             <label for="status">Status</label>
                             <select name="status" id="status" class="form-control" >	
-                                <option value="1">Ativado</option>
-                                <option value="0">Desativado</option>
+                                <option {{ ($subCategory->status == 1) ? 'selected' : '' }} value="1">Ativado</option>
+                                <option {{ ($subCategory->status == 0) ? 'selected' : '' }} value="0">Desativado</option>
                             </select>
                             <p></p>
                         </div> 
@@ -65,7 +65,7 @@
             </div>							
         </div>
         <div class="pb-5 pt-3">
-            <button type="submit" class="btn btn-primary">Criar</button>
+            <button type="submit" class="btn btn-primary">Salvar</button>
             <a href="{{ route('sub-categories.index') }}" class="btn btn-outline-dark ml-3">Cancelar</a>
         </div>
     </form>
@@ -82,8 +82,8 @@ $("#subCategoryForm").submit(function(event){
     var element = $(this);
     $("button[type=submit]").prop('disabled', true);
     $.ajax({
-        url: '{{ route("sub-categories.store") }}',
-        type: 'post',
+        url: '{{ route("sub-categories.update", $subCategory->id) }}',
+        type: 'put',
         data: element.serializeArray(),
         dataType: 'json',
         success: function(response){
@@ -106,6 +106,12 @@ $("#subCategoryForm").submit(function(event){
                 .addClass('invalid-feedbacks').html("");
 
             } else {
+
+                if(response['notFound'] == true) {
+                    window.location.href="{{ route('sub-categories.index') }}";
+                    return false;
+                }
+
                 var errors = response['errors'];
                 if(errors['name']) {
                     $("#name").addClass('is-invalid')
