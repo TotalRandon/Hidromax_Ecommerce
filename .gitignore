@@ -17,3 +17,11 @@ yarn-error.log
 /.fleet
 /.idea
 /.vscode
+
+public/temp
+public/temp/thumb
+public/uploads
+public/uploads/category
+public/uploads/category/thumb
+public/uploads/product/large
+public/uploads/product/small

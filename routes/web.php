@@ -4,6 +4,9 @@ use App\Http\Controllers\admin\HomeController;
 use App\Http\Controllers\admin\AdminLoginController;
 use App\Http\Controllers\admin\BrandsController;
 use App\Http\Controllers\admin\CategoryController;
+use App\Http\Controllers\admin\ProductController;
+use App\Http\Controllers\admin\ProductImageController;
+use App\Http\Controllers\admin\ProductSubCategoryController;
 use App\Http\Controllers\admin\SubCategoryController;
 use App\Http\Controllers\admin\TempImagesController;
 use Illuminate\Http\Request;
@@ -27,7 +30,8 @@ Route::get('/', function () {
 // User ADMIN
 Route::group(['prefix' => 'admin'], function(){
     Route::group(['middleware' => 'admin.guest'], function() {
-        //autenticação para administradores
+
+        //login e autenticação para administradores
         Route::get('/login', [AdminLoginController::class, 'index'])->name('admin.login');
         Route::post('/authenticate', [AdminLoginController::class, 'authenticate'])->name('admin.authenticate');
 
@@ -62,6 +66,19 @@ Route::group(['prefix' => 'admin'], function(){
         Route::get('/brands/{brand}/edit', [BrandsController::class, 'edit'])->name('brands.edit');
         Route::put('/brands/{brand}', [BrandsController::class, 'update'])->name('brands.update');
         Route::delete('/brands/{brand}', [BrandsController::class, 'destroy'])->name('brands.delete');
+
+        // Rotas de Product
+        Route::get('/products', [ProductController::class, 'index'])->name('products.index');
+        Route::get('/products/create', [ProductController::class, 'create'])->name('products.create');
+        Route::post('/products', [ProductController::class, 'store'])->name('products.store');
+        Route::get('/products/{product}/edit', [ProductController::class, 'edit'])->name('products.edit');
+        Route::put('/products/{product}', [ProductController::class, 'update'])->name('products.update');
+        Route::delete('/products/{product}', [ProductController::class, 'destroy'])->name('products.delete');
+
+        Route::post('/product-images/update', [ProductImageController::class, 'update'])->name('product-images.update');
+        Route::delete('/product-images', [ProductImageController::class, 'destroy'])->name('product-images.destroy');
+
+        Route::get('/product-subcategories', [ProductSubCategoryController::class, 'index'])->name('product-subcategories.index');
 
         //temp-images.create
         Route::post('/upload-temp-image', [TempImagesController::class, 'create'])->name('temp-images.create');
