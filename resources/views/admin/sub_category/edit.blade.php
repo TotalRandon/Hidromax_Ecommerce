@@ -60,7 +60,16 @@
                             </select>
                             <p></p>
                         </div> 
-                    </div>									
+                    </div>	
+                    <div class="col-md-6">
+                        <div class="mb-3">
+                            <label for="showHome">Mostrar na pagina do cliente</label>
+                            <select name="showHome" id="showHome" class="form-control">
+                                <option {{ ($category->showHome == 'Yes') ? 'selected' : '' }} value="Yes">Sim</option>    
+                                <option {{ ($category->showHome == 'No') ? 'selected' : '' }} value="No">Não</option>    
+                            </select>	
+                        </div>
+                    </div>	
                 </div>
             </div>							
         </div>
