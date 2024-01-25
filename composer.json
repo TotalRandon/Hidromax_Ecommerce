@@ -6,6 +6,7 @@
     "license": "MIT",
     "require": {
         "php": "^8.1",
+        "doctrine/dbal": "^3.7",
         "enyo/dropzone": "^5.9",
         "guzzlehttp/guzzle": "^7.2",
         "intervention/image": "^2.7",
@@ -27,7 +28,10 @@
             "App\\": "app/",
             "Database\\Factories\\": "database/factories/",
             "Database\\Seeders\\": "database/seeders/"
-        }
+        },
+        "files": [
+            "App/Helpers/helper.php"
+        ]
     },
     "autoload-dev": {
         "psr-4": {
