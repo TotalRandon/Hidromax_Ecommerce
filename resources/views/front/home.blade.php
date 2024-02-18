@@ -4,25 +4,24 @@
 <section class="section-1">
     <div id="carouselExampleIndicators" class="carousel slide carousel-fade" data-bs-ride="carousel" data-bs-interval="false">
         <div class="carousel-inner">
-            <div class="carousel-item active">
-                <!-- <img src="images/carousel-1.jpg" class="d-block w-100" alt=""> -->
 
+            <div class="carousel-item active">
                 <picture>
-                    <source media="(max-width: 799px)" srcset="{{ asset('front-assets/images/carousel-1-m.jpg') }}" />
-                    <source media="(min-width: 800px)" srcset="{{ asset('front-assets/images/carousel-1.jpg') }}" />
-                    <img src="{{ asset('front-assets/images/carousel-1.jpg') }}" alt="" />
+                    <source media="(max-width: 799px)" srcset="{{ asset('front-assets/images/carroceu - M.png') }}" />
+                    <source media="(min-width: 800px)" srcset="{{ asset('front-assets/images/carroceu - G.png') }}" />
+                    <img src="{{ asset('front-assets/images/carroceu - G.png') }}" alt="" />
                 </picture>
 
                 <div class="carousel-caption d-flex flex-column align-items-center justify-content-center">
                     <div class="p-3">
-                        <h1 class="display-4 text-white mb-3">Kids Fashion</h1>
+                        <h1 class="display-4 text-white mb-3">Ofertas do Dia</h1>
                         <p class="mx-md-5 px-5">Lorem rebum magna amet lorem magna erat diam stet. Sadips duo stet amet amet ndiam elitr ipsum diam</p>
-                        <a class="btn btn-outline-light py-2 px-4 mt-3" href="#">Shop Now</a>
+                        <a class="btn btn-outline-light py-2 px-4 mt-3" href="{{ route('front.shop') }}">Comprar agora</a>
                     </div>
                 </div>
             </div>
-            <div class="carousel-item">
 
+            <div class="carousel-item">
                 <picture>
                     <source media="(max-width: 799px)" srcset="{{ asset('front-assets/images/carousel-2-m.jpg') }}" />
                     <source media="(min-width: 800px)" srcset="{{ asset('front-assets/images/carousel-2.jpg') }}" />
@@ -37,9 +36,8 @@
                     </div>
                 </div>
             </div>
-            <div class="carousel-item">
-                <!-- <img src="images/carousel-3.jpg" class="d-block w-100" alt=""> -->
 
+            <div class="carousel-item">
                 <picture>
                     <source media="(max-width: 799px)" srcset="{{ asset('front-assets/images/carousel-3-m.jpg') }}" />
                     <source media="(min-width: 800px)" srcset="{{ asset('front-assets/images/carousel-3.jpg') }}" />
@@ -78,7 +76,7 @@
             <div class="col-lg-3 ">
                 <div class="box shadow-lg">
                     <div class="fa icon fa-shipping-fast text-primary m-0 mr-3"></div>
-                    <h2 class="font-weight-semi-bold m-0">Frete gratis</h2>
+                    <h2 class="font-weight-semi-bold m-0">Frete gratis para toda região</h2>
                 </div>                    
             </div>
             <div class="col-lg-3">
@@ -90,7 +88,7 @@
             <div class="col-lg-3 ">
                 <div class="box shadow-lg">
                     <div class="fa icon fa-phone-volume text-primary m-0 mr-3"></div>
-                    <h2 class="font-weight-semi-bold m-0">Suporte online 24/7</h5>
+                    <h2 class="font-weight-semi-bold m-0">Solicite seu orçamento</h5>
                 </div>                    
             </div>
         </div>
@@ -108,22 +106,21 @@
                 <div class="col-lg-3">
                     <div class="cat-card">
                         <div class="left">
-                            @if ($category->image != "")
-                                <img src="{{ asset('uploads/category/thumb/'.$category->image) }}" alt="" class="img-fluid">
-                            @endif
+                            <a href="{{ route('front.shop', $category->slug)}}">
+                                @if ($category->image != "")
+                                    <img src="{{ asset('uploads/category/thumb/'.$category->image) }}" alt="" class="img-fluid">
+                                @endif
+                            </a>  
                         </div>
                         <div class="right">
                             <div class="cat-data">
                                 <h2>{{ $category->name }}</h2>
-                                {{-- <p>100 Products</p> --}}
                             </div>
                         </div>
                     </div>
                 </div>
             @endforeach
             @endif
-            
-            
         </div>
     </div>
 </section>
@@ -142,8 +139,7 @@
                 <div class="col-md-3">
                     <div class="card product-card">
                         <div class="product-image position-relative">
-                            <a href="" class="product-img">
-                                {{-- <img class="card-img-top" src="{{ asset('front-assets/images/product-1.jpg') }}" alt=""> --}}
+                            <a href="{{ route('front.product', $product->slug) }}" class="product-img">
 
                                 @if (!empty($productImage->image))
                                 <img class="card-img-top" src="{{ asset('uploads/product/small/'.$productImage->image) }}">
@@ -164,9 +160,9 @@
                             <a class="h6 link" href="product.php">{{ $product->title }}</a>
                             <div class="price mt-2">
 
-                                <span class="h5"><strong>{{ $product->price }}</strong></span>
+                                <span class="h5"><strong>R${{ $product->price }}</strong></span>
                                 @if ($product->compare_price > 0)
-                                    <span class="h6 text-underline"><del>{{ $product->compare_price }}</del></span>
+                                    <span class="h6 text-underline"><del>R${{ $product->compare_price }}</del></span>
                                 @endif
 
                             </div>
@@ -195,8 +191,7 @@
                 <div class="col-md-3">
                     <div class="card product-card">
                         <div class="product-image position-relative">
-                            <a href="" class="product-img">
-                                {{-- <img class="card-img-top" src="{{ asset('front-assets/images/product-1.jpg') }}" alt=""> --}}
+                            <a href="{{ route('front.product', $product->slug) }}"" class="product-img">
 
                                 @if (!empty($productImage->image))
                                 <img class="card-img-top" src="{{ asset('uploads/product/small/'.$productImage->image) }}">

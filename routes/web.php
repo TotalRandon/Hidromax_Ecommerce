@@ -32,6 +32,7 @@ use Illuminate\Support\Facades\Route;
 // User Guest
 Route::get('/', [FrontController::class, 'index'])->name('front.home');
 Route::get('/shop/{categorySlug?}/{subCategorySlug?}', [ShopController::class, 'index'])->name('front.shop');
+Route::get('/product/{slug}', [ShopController::class, 'product'])->name('front.product');
 
 
 // User ADMIN

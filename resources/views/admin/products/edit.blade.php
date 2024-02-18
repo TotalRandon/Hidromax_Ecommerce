@@ -41,8 +41,20 @@
                                 </div>
                                 <div class="col-md-12">
                                     <div class="mb-3">
+                                        <label for="short_description">Descrição Curta</label>
+                                        <textarea name="short_description" id="short_description" cols="30" rows="10" class="summernote" placeholder="Descrição curta">{{ $product->short_description }}</textarea>
+                                    </div>
+                                </div>
+                                <div class="col-md-12">
+                                    <div class="mb-3">
                                         <label for="description">Descrição</label>
                                         <textarea name="description" id="description" cols="30" rows="10" class="summernote" placeholder="Descrição">{{ $product->description }}</textarea>
+                                    </div>
+                                </div>
+                                <div class="col-md-12">
+                                    <div class="mb-3">
+                                        <label for="shipping_returns">Envios e devoluções</label>
+                                        <textarea name="shipping_returns" id="shipping_returns" cols="30" rows="10" class="summernote" placeholder="Envios e devoluções">{{ $product->shipping_returns }}</textarea>
                                     </div>
                                 </div>                                            
                             </div>
