@@ -98,16 +98,15 @@ class SubCategoryController extends Controller
                 'notFound' => true,
                 'message' => 'Subategoria não encontrada'
             ]);
-            //return redirect()->route('sub-categories.index');
         }
 
         $validator = Validator::make($request->all(), [
             'name' => 'required',
-            //'slug' => 'required|unique:sub_categories',
-            'slug' => 'required|unique:categories,slug,' . $subCategory->id . ',id',
+            'slug' => 'required|unique:sub_categories,slug,' . $subCategory->id . ',id',
             'category' => 'required',
             'status' => 'required'
         ]);
+
 
         if ($validator->passes()) {
 
@@ -137,8 +136,8 @@ class SubCategoryController extends Controller
     {
         $subCategory = SubCategory::find($id);
 
-        if(empty($subCategory)) {
-            
+        if (empty($subCategory)) {
+
             session()->flash('error', 'Subcategoria não encontrada.');
 
             return response()->json([

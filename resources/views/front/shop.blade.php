@@ -79,30 +79,6 @@
                 <div class="card">
                     <div class="card-body">
                         <input type="text" class="js-range-slider" name="my_range" value="" />
-                        {{-- <div class="form-check mb-2">
-                            <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
-                            <label class="form-check-label" for="flexCheckDefault">
-                                R$0-R$100
-                            </label>
-                        </div>
-                        <div class="form-check mb-2">
-                            <input class="form-check-input" type="checkbox" value="" id="flexCheckChecked">
-                            <label class="form-check-label" for="flexCheckChecked">
-                                R$100-R$200
-                            </label>
-                        </div>                 
-                        <div class="form-check mb-2">
-                            <input class="form-check-input" type="checkbox" value="" id="flexCheckChecked">
-                            <label class="form-check-label" for="flexCheckChecked">
-                                R$200-R$500
-                            </label>
-                        </div> 
-                        <div class="form-check mb-2">
-                            <input class="form-check-input" type="checkbox" value="" id="flexCheckChecked">
-                            <label class="form-check-label" for="flexCheckChecked">
-                                R$500+
-                            </label>
-                        </div>                  --}}
                     </div>
                 </div>
             </div>
@@ -164,19 +140,6 @@
 
                     <div class="col-md-12 pt-5">
                         {{ $products->withQueryString()->links() }}
-                        {{-- <nav aria-label="Page navigation example">
-                            <ul class="pagination justify-content-end">
-                                <li class="page-item disabled">
-                                <a class="page-link" href="#" tabindex="-1" aria-disabled="true">Anterior</a>
-                                </li>
-                                <li class="page-item"><a class="page-link" href="#">1</a></li>
-                                <li class="page-item"><a class="page-link" href="#">2</a></li>
-                                <li class="page-item"><a class="page-link" href="#">3</a></li>
-                                <li class="page-item">
-                                <a class="page-link" href="#">Próximo</a>
-                                </li>
-                            </ul>
-                        </nav> --}}
                     </div>
                 </div>
             </div>
