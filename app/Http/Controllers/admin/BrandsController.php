@@ -102,7 +102,6 @@ class BrandsController extends Controller
 
         if ($validator->passes()) {
 
-            $brand = new Brand();
             $brand->name = $request->name;
             $brand->slug = $request->slug;
             $brand->status = $request->status;

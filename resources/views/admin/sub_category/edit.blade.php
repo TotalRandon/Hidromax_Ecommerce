@@ -118,7 +118,6 @@ $("#subCategoryForm").submit(function(event){
 
                 if(response['notFound'] == true) {
                     window.location.href="{{ route('sub-categories.index') }}";
-                    return false;
                 }
 
                 var errors = response['errors'];
