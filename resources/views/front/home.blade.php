@@ -113,9 +113,11 @@
                             </a>  
                         </div>
                         <div class="right">
-                            <div class="cat-data">
-                                <h2>{{ $category->name }}</h2>
-                            </div>
+                            <a class="text-body" href="{{ route('front.shop', $category->slug) }}">
+                                <div class="cat-data">
+                                    <h2>{{ $category->name }}</h2>
+                                </div>
+                            </a>
                         </div>
                     </div>
                 </div>
@@ -151,20 +153,20 @@
                             <a class="whishlist" href="222"><i class="far fa-heart"></i></a>                            
 
                             <div class="product-action">
-                                <a class="btn btn-dark" href="#">
-                                    <i class="fa fa-shopping-cart"></i> Adicionar ao carrinho
+                                <a class="btn btn-success" href="#">
+                                    <i class="fa fa-shopping-cart"></i> COMPRAR
                                 </a>                            
                             </div>
                         </div>                        
-                        <div class="card-body text-center mt-3">
-                            <a class="h6 link" href="product.php">{{ $product->title }}</a>
+                        <div class="card-body text-right">
+                            <a class="h6 link" href="{{ route('front.product', $product->slug) }}">{{ Str::limitText($product->title, 50) }}</a>
                             <div class="price mt-2">
-
-                                <span class="h5"><strong>R${{ $product->price = number_format($product->price, 2, ',') }}</strong></span>
                                 @if ($product->compare_price > 0)
-                                    <span class="h6 text-underline"><del>R${{ $product->compare_price = number_format($product->compare_price, 2, ',') }}</del></span>
+                                    <span class="h6 text-secondary"><del>R${{ $product->compare_price = number_format($product->compare_price, 2, ',') }}</del></span>
                                 @endif
-
+                            </div>
+                            <div class="price">
+                                <span class="h4"><strong>R${{ $product->price = number_format($product->price, 2, ',') }}</strong></span>
                             </div>
                         </div>                        
                     </div>                                               
@@ -191,7 +193,7 @@
                 <div class="col-md-3">
                     <div class="card product-card">
                         <div class="product-image position-relative">
-                            <a href="{{ route('front.product', $product->slug) }}"" class="product-img">
+                            <a href="{{ route('front.product', $product->slug) }}" class="product-img">
 
                                 @if (!empty($productImage->image))
                                 <img class="card-img-top" src="{{ asset('uploads/product/small/'.$productImage->image) }}">
@@ -203,20 +205,20 @@
                             <a class="whishlist" href="222"><i class="far fa-heart"></i></a>                            
 
                             <div class="product-action">
-                                <a class="btn btn-dark" href="#">
-                                    <i class="fa fa-shopping-cart"></i> Adicionar ao carrinho
+                                <a class="btn btn-success" href="#">
+                                    <i class="fa fa-shopping-cart"></i> COMPRAR
                                 </a>                            
                             </div>
-                        </div>                        
-                        <div class="card-body text-center mt-3">
-                            <a class="h6 link" href="product.php">{{ $product->title }}</a>
+                        </div>                      
+                        <div class="card-body text-right">
+                            <a class="h6 link" href="{{ route('front.product', $product->slug) }}">{{ Str::limitText($product->title, 45) }}</a>
                             <div class="price mt-2">
-
-                                <span class="h5"><strong>R$ {{ $product->price = number_format($product->price, 2, ',') }}</strong></span>
                                 @if ($product->compare_price > 0)
-                                    <span class="h6 text-underline"><del>R$ {{ $product->compare_price = number_format($product->compare_price, 2, ',') }}</del></span>
+                                    <span class="text text-secondary"><del>R${{ $product->compare_price = number_format($product->compare_price, 2, ',') }}</del></span>
                                 @endif
-
+                            </div>
+                            <div class="price">
+                                <span class="h4"><strong>R${{ $product->price = number_format($product->price, 2, ',') }}</strong></span>
                             </div>
                         </div>                        
                     </div>                                               

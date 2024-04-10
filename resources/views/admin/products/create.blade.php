@@ -132,7 +132,20 @@
                             </div>
                         </div>	                                                                      
                     </div>
+
+                <div class="card mb-3">
+                    <div class="card-body">	
+                        <h2 class="h4 mb-3">Produtos Relacionados</h2>
+                        <div class="mb-3">
+                            <select multiple class="related-product w-100" name="related_products[]" id="related_products">
+                                
+                            </select>
+                            <p class="error"></p>
+                        </div>
+                    </div>
+                </div> 
                 </div>
+
                 <div class="col-md-4">
                     <div class="card mb-3">
                         <div class="card-body">	
@@ -190,8 +203,8 @@
                             <h2 class="h4 mb-3">Produto em Destaque</h2>
                             <div class="mb-3">
                                 <select name="is_featured" id="is_featured" class="form-control">
-                                    <option value="No">Não</option>
-                                    <option value="Yes">Sim</option>                                                
+                                    <option value="no">Não</option>
+                                    <option value="yes">Sim</option>                                                
                                 </select>
                                 <p class="error"></p>
                             </div>
@@ -213,6 +226,22 @@
 
 @section('customJs')
 <script>
+$('.related-product').select2({
+    ajax: {
+        url: '{{ route("products.getProducts") }}',
+        dataType: 'json',
+        tags: true,
+        multiple: true,
+        minimumInputLenght: 3,
+        processResults: function (data) {
+            return {
+                results: data.tags
+            };
+        }
+    }
+});
+
+
 $("#title").change(function () {
     var element = $(this);
     $("button[type=submit]").prop('disabled', true);

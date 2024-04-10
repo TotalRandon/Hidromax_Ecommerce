@@ -59,8 +59,6 @@ class ShopController extends Controller
             $products = $products->orderBy('id', 'DESC');
         }
 
-        //$products = $products->orderBy('id', 'DESC');
-
         $products = $products->paginate(9);
 
         $data['categories'] = $categories;
@@ -83,7 +81,15 @@ class ShopController extends Controller
             abort(404);
         }
 
+        $relatedProducts = [];
+        // encontrar produtos relacionados  
+        if ($product->related_products != ''){
+            $productArray = explode(',', $product->related_products);
+            $relatedProducts = Product::WhereIn('id', $productArray)->with('product_images')->get();
+        }
+
         $data['product'] = $product;
+        $data['relatedProducts'] = $relatedProducts;
 
         return view('front.product', $data);
     }

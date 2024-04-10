@@ -70,8 +70,8 @@
                                     <img src="{{ asset('admin-assets/img/default-150x150.png') }}" class="img-thumbnail" width="50">
                                     @endif
                                 </td>
-                                <td><a href="#">{{ $product->title }}</a></td>
-                                <td>R${{ $product->price }}</td>
+                                <td><a href="{{ route('products.edit', $product->id) }}">{{ Str::limitText($product->title, 40) }}</a></td>
+                                <td>R${{ $product->price = number_format($product->price, 2, ',') }}</td>
                                 <td>{{ $product->qty }}</td>
                                 <td>{{ $product->sku }}</td>											
                                 <td>
