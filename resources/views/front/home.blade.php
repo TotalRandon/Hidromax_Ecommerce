@@ -162,11 +162,11 @@
                             <a class="h6 link" href="{{ route('front.product', $product->slug) }}">{{ Str::limitText($product->title, 50) }}</a>
                             <div class="price mt-2">
                                 @if ($product->compare_price > 0)
-                                    <span class="h6 text-secondary"><del>R${{ $product->compare_price = number_format($product->compare_price, 2, ',') }}</del></span>
+                                    <span class="h6 text-secondary"><del>R${{ $product->compare_price = number_format($product->compare_price, 2, ',', '.') }}</del></span>
                                 @endif
                             </div>
                             <div class="price">
-                                <span class="h4"><strong>R${{ $product->price = number_format($product->price, 2, ',') }}</strong></span>
+                                <span class="h4"><strong>R${{ $product->price = number_format($product->price, 2, ',', '.') }}</strong></span>
                             </div>
                         </div>                        
                     </div>                                               
@@ -214,11 +214,11 @@
                             <a class="h6 link" href="{{ route('front.product', $product->slug) }}">{{ Str::limitText($product->title, 45) }}</a>
                             <div class="price mt-2">
                                 @if ($product->compare_price > 0)
-                                    <span class="text text-secondary"><del>R${{ $product->compare_price = number_format($product->compare_price, 2, ',') }}</del></span>
+                                    <span class="text text-secondary"><del>R${{ $product->compare_price = number_format($product->compare_price, 2, ',', '.') }}</del></span>
                                 @endif
                             </div>
                             <div class="price">
-                                <span class="h4"><strong>R${{ $product->price = number_format($product->price, 2, ',') }}</strong></span>
+                                <span class="h4"><strong>R${{ $product->price = number_format($product->price, 2, ',', '.') }}</strong></span>
                             </div>
                         </div>                        
                     </div>                                               
