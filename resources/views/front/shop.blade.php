@@ -22,7 +22,7 @@
                 
                 <div class="card">
                     <div class="card-body">
-                        <div class="accordion accordion-flush" id="accordionExample">
+                        {{-- <div class="accordion accordion-flush" id="accordionExample">
                             @if ($categories->isNotEmpty())
                             @foreach ($categories as $key => $category)
                             <div class="accordion-item">
@@ -49,7 +49,41 @@
                             </div>  
                             @endforeach
                             @endif                
+                        </div> --}}
+                        <div class="accordion accordion-flush" id="accordionExample">
+                            @if ($categories->isNotEmpty())
+                            @foreach ($categories as $key => $category)
+                            <div class="accordion-item">
+                                <div class="d-flex justify-content-between align-items-center accordion-header" id="heading{{ $key }}">
+                                    <!-- Link direto para a categoria -->
+                                    <a href="{{ route('front.shop', $category->slug) }}" class="flex-grow-1 pe-3 nav-link {{ ($categorySelected == $category->id) ? 'text-primary' : '' }}" style="margin-right: auto;">
+                                        {{ $category->name }}
+                                    </a>
+                                    <!-- Botão apenas para acordeão, sem link -->
+                                    @if ($category->sub_category->isNotEmpty())
+                                    <button class="btn btn-link text-decoration-none" type="button" data-bs-toggle="collapse" data-bs-target="#collapse{{ $key }}" aria-expanded="false" aria-controls="collapse{{ $key }}">
+                                        <i class="fas fa-chevron-down"></i>
+                                    </button>
+                                    @endif
+                                </div>
+                                @if ($category->sub_category->isNotEmpty())
+                                <div id="collapse{{ $key }}" class="accordion-collapse collapse {{ ($categorySelected == $category->id) ? 'show' : '' }}" aria-labelledby="heading{{ $key }}" data-bs-parent="#accordionExample">
+                                    <div class="accordion-body">
+                                        <div class="navbar-nav">
+                                            @foreach ($category->sub_category as $subCategory)
+                                            <a href="{{ route('front.shop', [$category->slug, $subCategory->slug]) }}" class="nav-item nav-link {{ ($subCategorySelected == $subCategory->id) ? 'text-primary' : '' }}">
+                                                {{ $subCategory->name }}
+                                            </a>
+                                            @endforeach
+                                        </div>
+                                    </div>
+                                </div>
+                                @endif
+                            </div>  
+                            @endforeach
+                            @endif                
                         </div>
+                        
                     </div>
                 </div>
 
@@ -127,11 +161,11 @@
                                 <a class="h6 link" href="product.php">{{ Str::limitText($product->title, 45) }}</a>
                                 <div class="price mt-2">
                                     @if ($product->compare_price > 0)
-                                        <span class="h6 text-secundary"><del>R$ {{ $product->compare_price = number_format($product->compare_price, 2, ',')}}</del></span>
+                                        <span class="h6 text-secundary"><del>R$ {{ $product->compare_price = number_format($product->compare_price, 2, ',', '.')}}</del></span>
                                     @endif
                                 </div>
                                 <div class="price">
-                                    <span class="h4"><strong>R$ {{ $product->price = number_format($product->price, 2, ',')}}</strong></span>
+                                    <span class="h4"><strong>R$ {{ $product->price = number_format($product->price, 2, ',', '.')}}</strong></span>
                                 </div>
                             </div>                        
                         </div>                                               

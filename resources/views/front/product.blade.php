@@ -53,10 +53,10 @@
                         <small class="pt-1">(99 Reviews)</small>
                     </div>
                     @if ($product->compare_price > 0)
-                        <p class="text-secondary"><del>R${{ $product->compare_price = number_format($product->compare_price, 2, ',')}}</del></p>
+                        <p class="text-secondary"><del>R${{ $product->compare_price = number_format($product->compare_price, 2, ',', '.')}}</del></p>
                     @endif
 
-                    <h1 class="fs-1">R${{ $product->price = number_format($product->price, 2, ',')}}</h1>
+                    <h1 class="fs-1">R${{ $product->price = number_format($product->price, 2, ',', '.')}}</h1>
 
                     {!! $product->short_description !!}
 
@@ -108,7 +108,7 @@
                 @endphp
                 <div class="card product-card">
                     <div class="product-image position-relative">
-                        <a href="{{ route('front.product', $product->slug) }}" class="product-img">
+                        <a href="{{ route('front.product', $relProduct->slug) }}" class="product-img">
 
                             @if (!empty($productImage->image))
                                 <img class="card-img-top" src="{{ asset('uploads/product/small/'.$productImage->image) }}">
@@ -129,11 +129,11 @@
                         <a class="h6 link" href="">{{ Str::limitText($relProduct->title, 45) }}</a>
                         <div class="price">
                             @if ($relProduct->compare_price > 0)
-                                <span class="h6 text-secundary">R$<del>{{ $relProduct->compare_price = number_format($relProduct->compare_price, 2, ',')}}</del></span>
+                                <span class="h6 text-secondary">R$<del>{{ $relProduct->compare_price = number_format($relProduct->compare_price, 2, ',', '.')}}</del></span>
                             @endif
                         </div>
                         <div class="price">
-                            <span class="h4">R$<strong>{{ $relProduct->price = number_format($relProduct->price, 2, ',')}}</strong></span>
+                            <span class="h4">R$<strong>{{ $relProduct->price = number_format($relProduct->price, 2, ',', '.')}}</strong></span>
                         </div>
                     </div>                        
                 </div> 

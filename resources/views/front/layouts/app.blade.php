@@ -46,29 +46,39 @@
 </head>
 <body data-instant-intensity="mousedown">
 
-<div class="bg-light top-header">        
-	<div class="container">
-		<div class="row align-items-center py-3 d-none d-lg-flex justify-content-between">
-			<div class="col-lg-4 logo">
-				<a href="{{ route('front.home') }}" class="text-decoration-none">
-					<span class="h1 text-uppercase text-primary bg-dark px-2">Hidromax</span>
-					{{-- <span class="h1 text-uppercase text-dark bg-primary px-2 ml-n1">Materias</span> --}}
-				</a>
-			</div>
-			<div class="col-lg-6 col-6 text-left  d-flex justify-content-end align-items-center">
-				<a href="account.php" class="nav-link text-dark">Minha conta</a>
-				<form action="">					
-					<div class="input-group">
-						<input type="text" placeholder="Procurar produtos" class="form-control" aria-label="Amount (to the nearest dollar)">
-						<span class="input-group-text">
-							<i class="fa fa-search"></i>
-					  	</span>
+	<div class="bg-light top-header">
+		<div class="container">
+			<div class="row align-items-center py-3 d-none d-lg-flex justify-content-between">
+				<div class="col-lg-4 logo">
+					<a href="{{ route('front.home') }}" class="text-decoration-none">
+						<span class="h1 text-uppercase text-primary bg-dark px-2">Hidromax</span>
+					</a>
+				</div>
+				<div class="col-lg-6 col-6 text-left d-flex justify-content-end align-items-center">
+					<a href="account.php" class="nav-link text-dark">Minha conta</a>
+					<form class="me-3">
+						<div class="input-group">
+							<input type="text" placeholder="Procurar produtos" class="form-control" aria-label="Procurar produtos">
+							<button class="btn btn-outline-primary" type="submit">
+								<i class="fa fa-search"></i>
+							</button>
+						</div>
+					</form>
+					<div class="right-nav py-0">
+						<a href="cart.php" class="ml-3 d-flex align-items-center position-relative">
+							<i class="fas fa-shopping-cart text-primary"></i>
+							<!-- Badge para indicar a quantidade de itens no carrinho -->
+							<span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+								3 <!-- Dinamicamente atualizar este número com JavaScript ou no backend -->
+								<span class="visually-hidden">itens no carrinho</span>
+							</span>
+						</a>
 					</div>
-				</form>
-			</div>		
+				</div>
+			</div>
 		</div>
 	</div>
-</div>
+	
 
 <header class="bg-dark">
 	<div class="container">
@@ -104,11 +114,7 @@
                     @endif
       			</ul>      			
       		</div>   
-			<div class="right-nav py-0">
-				<a href="cart.php" class="ml-3 d-flex pt-2">
-					<i class="fas fa-shopping-cart text-primary"></i>					
-				</a>
-			</div> 		
+	
       	</nav>
   	</div>
 </header>
