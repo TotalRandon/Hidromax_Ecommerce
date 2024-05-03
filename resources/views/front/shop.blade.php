@@ -152,7 +152,7 @@
                                 <a class="whishlist" href="222"><i class="far fa-heart"></i></a>                            
 
                                 <div class="product-action">
-                                    <a class="btn btn-lg btn-success" href="#">
+                                    <a class="btn btn-lg btn-success" href="javascript:void(0);" onclick="addToCart({{ $product->id }});">
                                         <i class="fa fa-shopping-cart"></i> COMPRAR
                                     </a>                            
                                 </div>
@@ -161,7 +161,7 @@
                                 <a class="h6 link" href="product.php">{{ Str::limitText($product->title, 45) }}</a>
                                 <div class="price mt-2">
                                     @if ($product->compare_price > 0)
-                                        <span class="h6 text-secundary"><del>R$ {{ $product->compare_price = number_format($product->compare_price, 2, ',', '.')}}</del></span>
+                                        <span class="h6 text-secondary"><del>R$ {{ $product->compare_price = number_format($product->compare_price, 2, ',', '.')}}</del></span>
                                     @endif
                                 </div>
                                 <div class="price">
