@@ -43,6 +43,9 @@
 
 	<!-- Fav Icon -->
 	<link rel="shortcut icon" type="image/x-icon" href="#" />
+
+	<meta name="csrf-token" content="{{ csrf_token() }}">
+
 </head>
 <body data-instant-intensity="mousedown">
 
@@ -65,7 +68,7 @@
 						</div>
 					</form>
 					<div class="right-nav py-0">
-						<a href="cart.php" class="ml-3 d-flex align-items-center position-relative">
+						<a href="{{ route('front.cart') }}" class="ml-3 d-flex align-items-center position-relative">
 							<i class="fas fa-shopping-cart text-primary"></i>
 							<!-- Badge para indicar a quantidade de itens no carrinho -->
 							<span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
@@ -114,7 +117,7 @@
                     @endif
       			</ul>      			
       		</div>   
-	
+
       	</nav>
   	</div>
 </header>
@@ -195,6 +198,30 @@ function myFunction() {
   } else {
     navbar.classList.remove("sticky");
   }
+}
+
+$.ajaxSetup({
+	headers: {
+		'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+	}
+});
+
+function addToCart(id) {
+            
+    $.ajax({
+    	url: '{{ route("front.addToCart") }}',
+        type: 'post',
+        data: {id:id},
+        dataType: 'json',
+        success: function(response) {
+            if (response.status == true) {
+                window.location.href="{{ route('front.cart') }}";
+            } else {
+                alert(response.message);
+            }
+        }
+    })
+
 }
 </script>
 

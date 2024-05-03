@@ -101,28 +101,31 @@
             <h2>Categorias</h2>
         </div>           
         <div class="row pb-3">
-            @if (getCategories()->isNotEmpty())
-                @foreach (getCategories() as $category)
-                <div class="col-lg-3">
-                    <div class="cat-card">
-                        <div class="left">
-                            <a href="{{ route('front.shop', $category->slug)}}">
-                                @if ($category->image != "")
-                                    <img src="{{ asset('uploads/category/thumb/'.$category->image) }}" alt="" class="img-fluid">
-                                @endif
-                            </a>  
-                        </div>
-                        <div class="right">
-                            <a class="text-body" href="{{ route('front.shop', $category->slug) }}">
-                                <div class="cat-data">
-                                    <h2>{{ $category->name }}</h2>
-                                </div>
-                            </a>
+        @if (getCategories()->isNotEmpty())
+            @foreach (getCategories() as $category)
+                @if ($category->status == 1)  {{-- Verifica se o status é 1 --}}
+                    <div class="col-lg-3">
+                        <div class="cat-card">
+                            <div class="left">
+                                <a href="{{ route('front.shop', $category->slug)}}">
+                                    @if ($category->image != "")
+                                        <img src="{{ asset('uploads/category/thumb/'.$category->image) }}" alt="" class="img-fluid">
+                                    @endif
+                                </a>  
+                            </div>
+                            <div class="right">
+                                <a class="text-body" href="{{ route('front.shop', $category->slug) }}">
+                                    <div class="cat-data">
+                                        <h2>{{ $category->name }}</h2>
+                                    </div>
+                                </a>
+                            </div>
                         </div>
                     </div>
-                </div>
+                @endif {{-- Finaliza a verificação do status --}}
             @endforeach
-            @endif
+        @endif
+
         </div>
     </div>
 </section>
@@ -153,7 +156,7 @@
                             <a class="whishlist" href="222"><i class="far fa-heart"></i></a>                            
 
                             <div class="product-action">
-                                <a class="btn btn-success" href="#">
+                                <a class="btn btn-success" href="javascript:void(0);" onclick="addToCart({{ $product->id }});">
                                     <i class="fa fa-shopping-cart"></i> COMPRAR
                                 </a>                            
                             </div>
@@ -205,7 +208,7 @@
                             <a class="whishlist" href="222"><i class="far fa-heart"></i></a>                            
 
                             <div class="product-action">
-                                <a class="btn btn-success" href="#">
+                                <a class="btn btn-success" href="javascript:void(0);" onclick="addToCart({{ $product->id }});">
                                     <i class="fa fa-shopping-cart"></i> COMPRAR
                                 </a>                            
                             </div>
