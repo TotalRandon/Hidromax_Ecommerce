@@ -58,7 +58,7 @@
 					</a>
 				</div>
 				<div class="col-lg-6 col-6 text-left d-flex justify-content-end align-items-center">
-					<a href="account.php" class="nav-link text-dark">Minha conta</a>
+					<a href="{{ route('account.profile') }}" class="nav-link text-dark">Minha conta</a>
 					<form class="me-3">
 						<div class="input-group">
 							<input type="text" placeholder="Procurar produtos" class="form-control" aria-label="Procurar produtos">
