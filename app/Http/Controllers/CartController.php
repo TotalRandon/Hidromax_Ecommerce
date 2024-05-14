@@ -6,6 +6,7 @@ use App\Models\CustomerAddress;
 use App\Models\Order;
 use App\Models\OrderItem;
 use App\Models\Product;
+use App\Models\States;
 use Illuminate\Http\Request;
 use Gloudemans\Shoppingcart\Cart;
 use Illuminate\Support\Facades\Auth;
@@ -163,7 +164,10 @@ class CartController extends Controller
 
         session()->forget('url.intended');
 
+        $states = States::orderBy('name', 'ASC')->get();
+
         return view('front.checkout', [
+            'states' => $states,
             'customerAddress' => $customerAddress    
         ]);
     }
@@ -178,7 +182,7 @@ class CartController extends Controller
             'email' => 'required|email',
             'address' => 'required',
             'city' => 'required',
-            'state' => 'required',
+            'state_id' => 'required',
             'zip' => 'required|min:8', 
             'mobile' => 'required|min:11'
         ]);
@@ -206,7 +210,7 @@ class CartController extends Controller
                 'address' => $request->address,
                 'apartment' => $request->apartment,
                 'city' => $request->city,
-                'state' => $request->state,
+                'state_id' => $request->state_id,
                 'zip' => $request->zip,
             ]
         );
@@ -232,7 +236,7 @@ class CartController extends Controller
             $order->mobile = $request->mobile;
             $order->apartment = $request->apartment;
             $order->address = $request->address;
-            $order->state = $request->state;
+            $order->state_id = $request->state_id;
             $order->city = $request->city;
             $order->zip = $request->zip;
             $order->notes = $request->order_notes;

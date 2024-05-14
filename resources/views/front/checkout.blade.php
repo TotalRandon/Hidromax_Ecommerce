@@ -68,8 +68,14 @@
 
                             <div class="col-md-4">
                                 <div class="mb-3">
-                                    <input type="text" name="state" id="state" class="form-control" placeholder="Estado" value="{{ (!empty($customerAddress)) ? $customerAddress->state : '' }}">
-                                    <p></p>
+                                    <select name="state_id" id="state_id" class="form-control">
+                                        <option value="">Selecione um estado</option>
+                                        @if ($states->isNotEmpty())
+                                            @foreach ($states as $state)
+                                                <option value="{{ $state->id }}" {{ (!empty($customerAddress) && $customerAddress->state_id == $state->id) ? 'selected' : '' }}>{{ $state->name }}</option>
+                                            @endforeach                                    
+                                        @endif
+                                    </select>                                    
                                 </div>            
                             </div>
                             
