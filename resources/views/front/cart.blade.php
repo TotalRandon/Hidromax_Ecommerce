@@ -112,7 +112,7 @@
                             <div>R$ {{ Cart::subtotal() }}</div>
                         </div>
                         <div class="pt-5">
-                            <a href="login.php" class="btn-dark btn btn-block w-100">Finalizar Pedido</a>
+                            <a href="{{ route('front.checkout') }}" class="btn-dark btn btn-block w-100">Finalizar Pedido</a>
                         </div>
                     </div>
                 </div>     
