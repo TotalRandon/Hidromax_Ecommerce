@@ -17,7 +17,7 @@ class CustomerAddress extends Model
         'mobile', 
         'address', 
         'apartment', 
-        'state', 
+        'state_id', 
         'city', 
         'zip'
     ];
