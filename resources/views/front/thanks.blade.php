@@ -10,7 +10,7 @@
                 </div>
             @endif
             <h1>Obrigado!</h1>
-            <p>Seu pedido {{ $id }}</p>
+            <p>Seu pedido #{{ $id }}</p>
         </div>
     </section>
 @endsection

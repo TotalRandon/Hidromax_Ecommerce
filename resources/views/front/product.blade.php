@@ -6,7 +6,7 @@
         <div class="light-font">
             <ol class="breadcrumb primary-color mb-0">
                 <li class="breadcrumb-item"><a class="white-text" href="{{ route('front.home') }}">Home</a></li>
-                <li class="breadcrumb-item"><a class="white-text" href="{{ route('front.shop') }}">Shop</a></li>
+                <li class="breadcrumb-item"><a class="white-text" href="{{ route('front.shop') }}">Loja</a></li>
                 <li class="breadcrumb-item">{{ $product->title }}</li>
             </ol>
         </div>
