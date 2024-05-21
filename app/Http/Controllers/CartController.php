@@ -6,6 +6,7 @@ use App\Models\CustomerAddress;
 use App\Models\Order;
 use App\Models\OrderItem;
 use App\Models\Product;
+use App\Models\ShippingCharge;
 use App\Models\States;
 use Illuminate\Http\Request;
 use Gloudemans\Shoppingcart\Cart;
@@ -26,48 +27,34 @@ class CartController extends Controller
     {
         $product = Product::with('product_images')->find($request->id);
 
-        if($product == null){
+        if ($product == null) {
             return response()->json([
                 'status' => false,
                 'message' => 'Produto não encontrado'
             ]);
         }
 
-        if($this->cart->count() > 0){
-            // verifica se o produto foi adicionado ao carrinho
-            // echo "Produto ja adicionado ao carrinho";
+        $cartContent = $this->cart->content();
+        $productAlreadyExist = false;
 
-            $cartContent = $this->cart->content();
-            $productAlreadyExist = false;
-
-            foreach ($cartContent as $item) {
-                if ($item->id == $product->id) {
-                    $productAlreadyExist = true;
-                }
+        foreach ($cartContent as $item) {
+            if ($item->id == $product->id) {
+                $productAlreadyExist = true;
+                break;
             }
+        }
 
-            if ($productAlreadyExist == false) {
-                $this->cart->add($product->id, $product->title, 1, $product->price, [
-                    'productImage' => (!empty( $product->product_images)) ? $product->product_images->first() : ''
-                ]);
-
-                $status = true;
-                $message = $product->title.' adicionado ao carrinho com sucesso';
-                session()->flash('success', $message);
-            } else {
-                $status = false;
-                $message = $product->title.' ja foi adicionado ao carrinho';
-            }
-
-        } else {
-            // caso o carrinho estar vazio
-
+        if (!$productAlreadyExist) {
             $this->cart->add($product->id, $product->title, 1, $product->price, [
-                'productImage' => (!empty( $product->product_images)) ? $product->product_images->first() : ''
+                'productImage' => (!empty($product->product_images)) ? $product->product_images->first() : ''
             ]);
+
             $status = true;
-            $message = $product->title.' adicionado ao carrinho com sucesso';
+            $message = $product->title . ' adicionado ao carrinho com sucesso';
             session()->flash('success', $message);
+        } else {
+            $status = false;
+            $message = $product->title . ' já foi adicionado ao carrinho';
         }
 
         return response()->json([
@@ -78,8 +65,7 @@ class CartController extends Controller
 
     public function cart()
     {
-        $cartContent = $this->cart->content();
-        $data['cartContent'] = $cartContent;
+        $data['cartContent'] = $this->cart->content();
         return view('front.cart', $data);
     }
 
@@ -89,22 +75,13 @@ class CartController extends Controller
         $qty = $request->qty;
 
         $itemInfo = $this->cart->get($rowId);
-
         $product = Product::find($itemInfo->id);
+
         // checar a quantidade em estoque
-
-        if ($product->track_qty == 'yes') {
-
-            if($qty <= $product->qty) {
-                $this->cart->update($rowId, $qty);
-                $message = 'Carrinho atualizado com sucesso';
-                $status = true;
-                session()->flash('success', $message);
-            } else {
-                $message = 'Não há no estoque ('.$qty.') '.$product->title.'';
-                $status = false;
-                session()->flash('error', $message);
-            }
+        if ($product->track_qty == 'yes' && $qty > $product->qty) {
+            $message = 'Não há no estoque (' . $qty . ') ' . $product->title;
+            $status = false;
+            session()->flash('error', $message);
         } else {
             $this->cart->update($rowId, $qty);
             $message = 'Carrinho atualizado com sucesso';
@@ -122,7 +99,7 @@ class CartController extends Controller
     {
         $itemInfo = $this->cart->get($request->rowId);
 
-        if($itemInfo == null) {
+        if ($itemInfo == null) {
             $errorMessage = 'Produto não encontrado no carrinho';
             session()->flash('error', $errorMessage);
 
@@ -143,66 +120,68 @@ class CartController extends Controller
         ]);
     }
 
-    public function checkout(){
-
+    public function checkout()
+    {
         // se o carrinho estiver vazio não é possivel acessar o tela de checkout
         if ($this->cart->count() == 0) {
             return redirect()->route('front.cart');
         }
 
         // se o usuario não estiver logado, redirecionar o visitante para tela de login
-        if (Auth::check() == false) {
-
-            if(!session()->has('url.intended')) {
+        if (!Auth::check()) {
+            if (!session()->has('url.intended')) {
                 session(['url.intended' => url()->current()]);
             }
-
             return redirect()->route('account.login');
         }
 
         $customerAddress = CustomerAddress::where('user_id', Auth::user()->id)->first();
-
-        session()->forget('url.intended');
-
         $states = States::orderBy('name', 'ASC')->get();
+
+        // Calculo de frete
+        $userState = $customerAddress->state_id;
+        $shippingInfo = ShippingCharge::where('states_id', $userState)->first();
+
+        $totalQty = $this->cart->count();
+        $totalShippingCharge = $shippingInfo ? $shippingInfo->amount : 0;
+        $grandTotal = $this->cart->subtotal(2, '.', '') + $totalShippingCharge;
 
         return view('front.checkout', [
             'states' => $states,
-            'customerAddress' => $customerAddress    
+            'customerAddress' => $customerAddress,
+            'totalShippingCharge' => $totalShippingCharge,
+            'grandTotal' => $grandTotal
         ]);
     }
 
-    public function processCheckout(Request $request){
-        
+    public function processCheckout(Request $request)
+    {
         // passo 1 - aplicar validacao de dados 
-
-        $validator = Validator::make($request->all(),[
+        $validator = Validator::make($request->all(), [
             'first_name' => 'required',
             'last_name' => 'required',
             'email' => 'required|email',
             'address' => 'required',
             'city' => 'required',
             'state_id' => 'required',
-            'zip' => 'required|min:8', 
+            'zip' => 'required|min:8',
             'mobile' => 'required|min:11'
         ]);
 
         if ($validator->fails()) {
             return response()->json([
-                'message' => 'Algo de errado não esta certo',
+                'message' => 'Algo de errado não está certo',
                 'status' => false,
                 'errors' => $validator->errors()
             ]);
         }
 
         // passo 2 - savar dados de endereço do usuario na tabela ( Customers_addresses )
-
         $user = Auth::user();
 
         CustomerAddress::updateOrCreate(
             ['user_id' => $user->id],
             [
-                'user_id' => $user->id,
                 'first_name' => $request->first_name,
                 'last_name' => $request->last_name,
                 'email' => $request->email,
@@ -215,21 +194,37 @@ class CartController extends Controller
             ]
         );
 
-        //passo 3 - guardar os dados de pedidos na tabela ( Orders )
+        // passo 3 - guardar os dados de pedidos na tabela ( Orders )
 
-        if ($request->payment_method == 'stripe') {
+        // if ($request->payment_mathod == 'stripe') {
 
-            $shipping = 0;
-            $discount = 0;
+            // // Calulando frete + total dos itens
+
+            // $shippingInfo = ShippingCharge::where('states_id', $request->state_id)->first();
+
+            // if ($shippingInfo != null) {
+
+            //     $shippingCharge = $shippingInfo->amount;
+            //     $grandTotal = $subTotal + $shippingCharge;
+
+            // } else {
+            //     $shippingInfo = ShippingCharge::where('states_id')->first();
+
+            //     $shippingCharge = $shippingInfo->amount;
+            //     $grandTotal = $subTotal + $shippingCharge;
+
+            // }
+
+            $shipping = ShippingCharge::where('states_id', $request->state_id)->first();
+            $shippingCharge = $shipping ? $shipping->amount : 0;
             $subTotal = $this->cart->subtotal(2, '.', '');
-            $grandTotal = $subTotal+$shipping;
+            $grandTotal = $subTotal + $shippingCharge;
 
             $order = new Order;
             $order->subtotal = $subTotal;
-            $order->shipping = $shipping;
+            $order->shipping = $shippingCharge;
             $order->grand_total = $grandTotal;
             $order->user_id = $user->id;
-
             $order->first_name = $request->first_name;
             $order->last_name = $request->last_name;
             $order->email = $request->email;
@@ -242,38 +237,70 @@ class CartController extends Controller
             $order->notes = $request->order_notes;
             $order->save();
 
-            // passo 4 - armazenar os itens comprados pelo usuario na tabela ( Order_itens )
+        // } else {
 
-            foreach ($this->cart->content() as $item) {
+        // }
 
-                $orderItem = new OrderItem();
-                $orderItem->product_id = $item->id;
-                $orderItem->order_id = $order->id;
-                $orderItem->name = $item->name;
-                $orderItem->qty = $item->qty;
-                $orderItem->price = $item->price;
-                $orderItem->total = $item->price * $item->qty;
-                $orderItem->save();
-            }
-
-            session()->flash('success', 'Seu pedido foi realiado com sucesso.');
-
-            $this->cart->destroy();
-
-            return response()->json([
-                'message' => 'Pedido salvo com sucesso',
-                'orderid' => $order->id,
-                'status' => true,
-            ]);
-
-        } else {
-
+        // passo 4 - armazenar os itens comprados pelo usuario na tabela ( Order_itens )
+        foreach ($this->cart->content() as $item) {
+            $orderItem = new OrderItem();
+            $orderItem->product_id = $item->id;
+            $orderItem->order_id = $order->id;
+            $orderItem->name = $item->name;
+            $orderItem->qty = $item->qty;
+            $orderItem->price = $item->price;
+            $orderItem->total = $item->price * $item->qty;
+            $orderItem->save();
         }
+
+        session()->flash('success', 'Seu pedido foi realizado com sucesso.');
+
+        $this->cart->destroy();
+
+        return response()->json([
+            'message' => 'Pedido salvo com sucesso',
+            'order_id' => $order->id,
+            'status' => true,
+            'redirect_url' => route('front.thankyou', [ 'id' => $order->id ])
+        ]);
     }
 
-    public function thankyou($id) {
+    public function thankyou($id)
+    {
         return view('front.thanks', [
             'id' => $id
         ]);
+    }
+
+    public function getOrderSummery(Request $request)
+    {
+        $subTotal = $this->cart->subtotal(2, '.', '');
+
+        if ($request->state_id > 0) {
+            $shippingInfo = ShippingCharge::where('states_id', $request->state_id)->first();
+
+            if ($shippingInfo != null) {
+                $shippingCharge = $shippingInfo->amount;
+            } else {
+                $shippingInfo = ShippingCharge::where('states_id')->first();
+                $shippingCharge = $shippingInfo ? $shippingInfo->amount : 0;
+            }
+
+            $grandTotal = $subTotal + $shippingCharge;
+
+            return response()->json([
+                'status' => true,
+                'grandTotal' => number_format($grandTotal, 2, ',', '.'),
+                'shippingCharge' => number_format($shippingCharge, 2, ',', '.')
+            ]);
+        } else {
+            $grandTotal = $subTotal;
+
+            return response()->json([
+                'status' => true,
+                'grandTotal' => number_format($grandTotal, 2, ',', '.'),
+                'shippingCharge' => number_format(0, 2, ',', '.')
+            ]);
+        }
     }
 }
