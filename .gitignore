@@ -18,10 +18,26 @@ yarn-error.log
 /.idea
 /.vscode
 
-public/temp
-public/temp/thumb
-public/uploads
-public/uploads/category
-public/uploads/category/thumb
-public/uploads/product/large
-public/uploads/product/small
+# Ignorar todos os arquivos dentro de public/temp, mas não a pasta
+public/temp/*
+!public/temp/.gitignore
+
+# Ignorar todos os arquivos dentro de public/temp/thumb, mas não a pasta
+public/temp/thumb/*
+!public/temp/thumb/.gitignore
+
+# Ignorar todos os arquivos dentro de public/uploads/category, mas não a pasta
+public/uploads/category/*
+!public/uploads/category/.gitignore
+
+# Ignorar todos os arquivos dentro de public/uploads/category/thumb, mas não a pasta
+public/uploads/category/thumb/*
+!public/uploads/category/thumb/.gitignore
+
+# Ignorar todos os arquivos dentro de public/uploads/product/large, mas não a pasta
+public/uploads/product/large/*
+!public/uploads/product/large/.gitignore
+
+# Ignorar todos os arquivos dentro de public/uploads/product/small, mas não a pasta
+public/uploads/product/small/*
+!public/uploads/product/small/.gitignore
