@@ -121,23 +121,24 @@ class CartController extends Controller
     }
 
     public function checkout()
-    {
-        // se o carrinho estiver vazio não é possivel acessar o tela de checkout
-        if ($this->cart->count() == 0) {
-            return redirect()->route('front.cart');
+{
+    // se o carrinho estiver vazio não é possivel acessar o tela de checkout
+    if ($this->cart->count() == 0) {
+        return redirect()->route('front.cart');
+    }
+
+    // se o usuario não estiver logado, redirecionar o visitante para tela de login
+    if (!Auth::check()) {
+        if (!session()->has('url.intended')) {
+            session(['url.intended' => url()->current()]);
         }
+        return redirect()->route('account.login');
+    }
 
-        // se o usuario não estiver logado, redirecionar o visitante para tela de login
-        if (!Auth::check()) {
-            if (!session()->has('url.intended')) {
-                session(['url.intended' => url()->current()]);
-            }
-            return redirect()->route('account.login');
-        }
+    $customerAddress = CustomerAddress::where('user_id', Auth::user()->id)->first();
+    $states = States::orderBy('name', 'ASC')->get();
 
-        $customerAddress = CustomerAddress::where('user_id', Auth::user()->id)->first();
-        $states = States::orderBy('name', 'ASC')->get();
-
+    if ($customerAddress) {
         // Calculo de frete
         $userState = $customerAddress->state_id;
         $shippingInfo = ShippingCharge::where('states_id', $userState)->first();
@@ -145,14 +146,20 @@ class CartController extends Controller
         $totalQty = $this->cart->count();
         $totalShippingCharge = $shippingInfo ? $shippingInfo->amount : 0;
         $grandTotal = $this->cart->subtotal(2, '.', '') + $totalShippingCharge;
-
-        return view('front.checkout', [
-            'states' => $states,
-            'customerAddress' => $customerAddress,
-            'totalShippingCharge' => $totalShippingCharge,
-            'grandTotal' => $grandTotal
-        ]);
+    } else {
+        $userState = null;
+        $totalShippingCharge = 0;
+        $grandTotal = $this->cart->subtotal(2, '.', '');
     }
+
+    return view('front.checkout', [
+        'states' => $states,
+        'customerAddress' => $customerAddress,
+        'totalShippingCharge' => $totalShippingCharge,
+        'grandTotal' => $grandTotal
+    ]);
+}
+
 
     public function processCheckout(Request $request)
     {

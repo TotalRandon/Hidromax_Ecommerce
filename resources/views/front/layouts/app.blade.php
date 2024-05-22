@@ -1,8 +1,8 @@
 <!DOCTYPE html>
-<html class="no-js" lang="en_AU" />
+<html class="no-js" lang="pt-br" />
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-	<title>Hidromax loja online</title>
+	<title>Hidromax | Materiais para Construção</title>
 	<meta name="description" content="" />
 	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no, maximum-scale=1, user-scalable=no" />
 
@@ -42,24 +42,65 @@
 	<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@200;500&family=Raleway:ital,wght@0,400;0,600;0,800;1,200&family=Roboto+Condensed:wght@400;700&family=Roboto:wght@300;400;700;900&display=swap" rel="stylesheet">
 
 	<!-- Fav Icon -->
-	<link rel="shortcut icon" type="image/x-icon" href="#" />
+	<link rel="shortcut icon" type="image/x-icon" href="{{ asset('front-assets/images/favicon.png') }}"/>
 
 	<meta name="csrf-token" content="{{ csrf_token() }}">
+
+	<style>
+        .top-info-bar {
+            font-size: 14px;
+            padding: 10px 0;
+        }
+        .top-info-bar a {
+            margin-right: 15px;
+            text-decoration: none;
+        }
+        .top-info-bar a:hover {
+            text-decoration: underline;
+        }
+        .custom-logo {
+            max-width: 200px; /* Ajuste conforme necessário */
+            height: auto;
+        }
+        .search-form {
+            width: 100%;
+            max-width: 400px; /* Ajuste conforme necessário */
+        }
+    </style>
 
 </head>
 <body data-instant-intensity="mousedown">
 
-	<div class="bg-light top-header">
+	<div class="top-info-bar bg-dark">
+		<div class="container">
+			<div class="row align-items-center justify-content-between text-light">
+				<div class="col-12 d-md-none">
+					<a href="#" class="text-white d-block">Compre pelo WhatsApp (somente vendas) (19) 98417-7899</a>
+				</div>
+				<div class="col-md-6 d-none d-md-block">
+					<a href="#" class="text-white">SBO</a>
+					<a href="#" class="text-white">Compre pelo WhatsApp (somente vendas) (19) 98417-7899</a>
+				</div>
+				<div class="col-md-6 d-none d-md-block text-end">
+					<a href="#" class="text-white">Dicas de segurança</a>
+					<a href="#" class="text-white">Precisa de ajuda?</a>
+				</div>
+			</div>
+		</div>
+	</div>
+	
+	
+	<div class="top-header" style="background-color: #091442">
 		<div class="container">
 			<div class="row align-items-center py-3 d-none d-lg-flex justify-content-between">
 				<div class="col-lg-4 logo">
 					<a href="{{ route('front.home') }}" class="text-decoration-none">
-						<span class="h1 text-uppercase text-primary bg-dark px-2">Hidromax</span>
+						<img src="{{ asset('front-assets/images/Hidromax_logo.png') }}" alt="Hidromax Logo" class="img-fluid w-25">
 					</a>
 				</div>
 				<div class="col-lg-6 col-6 text-left d-flex justify-content-end align-items-center">
-					<a href="{{ route('account.profile') }}" class="nav-link text-dark">Minha conta</a>
-					<form class="me-3">
+					<a href="{{ route('account.profile') }}" class="nav-link text-default">Minha conta</a>
+					<form class="me-3 search-form">
 						<div class="input-group">
 							<input type="text" placeholder="Procurar produtos" class="form-control" aria-label="Procurar produtos">
 							<button class="btn btn-outline-primary" type="submit">
@@ -95,29 +136,40 @@
 				  <i class="navbar-toggler-icon fas fa-bars"></i>
     		</button>
     		<div class="collapse navbar-collapse" id="navbarSupportedContent">
-      			<ul class="navbar-nav me-auto mb-2 mb-lg-0">
-        			<!-- <li class="nav-item">
-          				<a class="nav-link active" aria-current="page" href="index.php" title="Products">Home</a>
-        			</li> -->
-                    @if (getCategories()->isNotEmpty())
-                    @foreach (getCategories() as $category)
-                    <li class="nav-item dropdown">
-						<button class="btn btn-dark dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
-							{{ $category->name }}
-						</button>
-                        @if ($category->sub_category->isNotEmpty())
-                            <ul class="dropdown-menu dropdown-menu-dark">
-                                @foreach ($category->sub_category as $subCategory)
-                                    <li><a class="dropdown-item nav-link" href="{{ route('front.shop',[$category->slug, $subCategory->slug]) }}">{{ $subCategory->name }}</a></li>
-                                @endforeach
-                            </ul>
-                        @endif
-					</li>
-                    @endforeach
-                    @endif
-      			</ul>      			
-      		</div>   
-
+				<ul class="navbar-nav me-auto mb-2 mb-lg-0">
+					<!-- <li class="nav-item">
+						<a class="nav-link active" aria-current="page" href="index.php" title="Products">Home</a>
+					</li> -->
+					@if (getCategories()->isNotEmpty())
+						@foreach (getCategories()->slice(0, 5) as $category)
+							<li class="nav-item dropdown">
+								<button class="btn btn-dark dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+									{{ $category->name }}
+								</button>
+								@if ($category->sub_category->isNotEmpty())
+									<ul class="dropdown-menu dropdown-menu-dark">
+										@foreach ($category->sub_category as $subCategory)
+											<li><a class="dropdown-item nav-link" href="{{ route('front.shop',[$category->slug, $subCategory->slug]) }}">{{ $subCategory->name }}</a></li>
+										@endforeach
+									</ul>
+								@endif
+							</li>
+						@endforeach
+						@if (getCategories()->count() > 5)
+							<li class="nav-item dropdown">
+								<button class="btn btn-dark dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+									Mais Categorias
+								</button>
+								<ul class="dropdown-menu dropdown-menu-dark">
+									@foreach (getCategories()->slice(5) as $category)
+										<li><a class="dropdown-item nav-link" href="{{ route('front.shop', $category->slug) }}">{{ $category->name }}</a></li>
+									@endforeach
+								</ul>
+							</li>
+						@endif
+					@endif
+				</ul>              
+			</div>
       	</nav>
   	</div>
 </header>
@@ -126,7 +178,7 @@
     @yield('content')
 </main>
 
-<footer class="bg-dark mt-5">
+<footer class="mt-5" style="background-color: #091442">
 	<div class="container pb-5 pt-3">
 		<div class="row">
 			<div class="col-md-4">
