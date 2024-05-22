@@ -6,7 +6,7 @@
     <div class="container-fluid my-2">
         <div class="row mb-2">
             <div class="col-sm-6">
-                <h1>Gerenciamento de entregas</h1>
+                <h1>Gerenciamento de fretes</h1>
             </div>
         </div>
     </div>

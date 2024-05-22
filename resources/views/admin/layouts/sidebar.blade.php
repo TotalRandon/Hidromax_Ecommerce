@@ -1,8 +1,8 @@
 <aside class="main-sidebar sidebar-dark-primary elevation-4">
     <!-- Brand Logo -->
     <a href="{{ route('admin.dashboard') }}" class="brand-link" style="text-align: center">
-        <!-- <img src="{{'admin-asset/img/AdminLTELogo.png'}}" alt="AdminLTE Logo" class="brand-image img-circle elevation-3" style="opacity: .8"> -->
-        <span class="brand-text font-weight-hight">HIDROMAX</span>
+         <img src="{{ asset('front-assets/images/Hidromax_logo.png') }}" width="150px" height="150px" alt="Hidormax Logo" class="img-thumbnail img-circle elevation-4" style="opacity: .8">
+        {{-- <span class="brand-text font-weight-hight">HIDROMAX</span> --}}
     </a>
     <!-- Sidebar -->
     <div class="sidebar">
@@ -45,13 +45,13 @@
                 </li>
                 
                 <li class="nav-item">
-                    <a href="#" class="nav-link">
+                    <a href="{{ route('shipping.create') }}" class="nav-link">
                         <!-- <i class="nav-icon fas fa-tag"></i> -->
                         <i class="fas fa-truck nav-icon"></i>
-                        <p>Entregas</p>
+                        <p>Fretes</p>
                     </a>
                 </li>							
-                <li class="nav-item">
+                {{-- <li class="nav-item">
                     <a href="orders.html" class="nav-link">
                         <i class="nav-icon fas fa-shopping-bag"></i>
                         <p>Pedidos</p>
@@ -74,7 +74,7 @@
                         <i class="nav-icon  far fa-file-alt"></i>
                         <p>Paginas</p>
                     </a>
-                </li>							
+                </li>							 --}}
             </ul>
         </nav>
     </div>

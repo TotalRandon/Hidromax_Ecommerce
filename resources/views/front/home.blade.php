@@ -2,66 +2,68 @@
 
 @section('content')
 <section class="section-1">
-    <div id="carouselExampleIndicators" class="carousel slide carousel-fade" data-bs-ride="carousel" data-bs-interval="false">
-        <div class="carousel-inner">
-
-            <div class="carousel-item active">
-                <picture>
-                    <source media="(max-width: 799px)" srcset="{{ asset('front-assets/images/carroceu - M.png') }}" />
-                    <source media="(min-width: 800px)" srcset="{{ asset('front-assets/images/carroceu - G.png') }}" />
-                    <img src="{{ asset('front-assets/images/carroceu - G.png') }}" alt="" />
-                </picture>
-
-                <div class="carousel-caption d-flex flex-column align-items-center justify-content-center">
-                    <div class="p-3">
-                        <h1 class="display-4 text-white mb-3">Ofertas do Dia</h1>
-                        <p class="mx-md-5 px-5">Lorem rebum magna amet lorem magna erat diam stet. Sadips duo stet amet amet ndiam elitr ipsum diam</p>
-                        <a class="btn btn-outline-light py-2 px-4 mt-3" href="{{ route('front.shop') }}">Comprar agora</a>
+    <div class="container">
+        <div id="carouselExampleIndicators" class="carousel slide carousel-fade" data-bs-ride="carousel" data-bs-interval="false">
+            <div class="carousel-inner">
+    
+                <div class="carousel-item active">
+                    <picture>
+                        <source media="(max-width: 799px)" srcset="{{ asset('front-assets/images/carroceu - M.png') }}" />
+                        <source media="(min-width: 800px)" srcset="{{ asset('front-assets/images/carroceu - G.png') }}" />
+                        <img src="{{ asset('front-assets/images/carroceu - G.png') }}" alt="" />
+                    </picture>
+    
+                    <div class="carousel-caption d-flex flex-column align-items-center justify-content-center">
+                        <div class="p-3">
+                            <h1 class="display-4 text-white mb-3">Ofertas do Dia</h1>
+                            <p class="mx-md-5 px-5">Lorem rebum magna amet lorem magna erat diam stet. Sadips duo stet amet amet ndiam elitr ipsum diam</p>
+                            <a class="btn btn-outline-light py-2 px-4 mt-3" href="{{ route('front.shop') }}">Comprar agora</a>
+                        </div>
+                    </div>
+                </div>
+    
+                <div class="carousel-item">
+                    <picture>
+                        <source media="(max-width: 799px)" srcset="{{ asset('front-assets/images/carousel-2-m.jpg') }}" />
+                        <source media="(min-width: 800px)" srcset="{{ asset('front-assets/images/carousel-2.jpg') }}" />
+                        <img src="{{ asset('front-assets/images/carousel-2.jpg') }}" alt="" />
+                    </picture>
+    
+                    <div class="carousel-caption d-flex flex-column align-items-center justify-content-center">
+                        <div class="p-3">
+                            <h1 class="display-4 text-white mb-3">Womens Fashion</h1>
+                            <p class="mx-md-5 px-5">Lorem rebum magna amet lorem magna erat diam stet. Sadips duo stet amet amet ndiam elitr ipsum diam</p>
+                            <a class="btn btn-outline-light py-2 px-4 mt-3" href="#">Shop Now</a>
+                        </div>
+                    </div>
+                </div>
+    
+                <div class="carousel-item">
+                    <picture>
+                        <source media="(max-width: 799px)" srcset="{{ asset('front-assets/images/carousel-3-m.jpg') }}" />
+                        <source media="(min-width: 800px)" srcset="{{ asset('front-assets/images/carousel-3.jpg') }}" />
+                        <img src="{{ asset('front-assets/images/carousel-2.jpg') }}" alt="" />
+                    </picture>
+    
+                    <div class="carousel-caption d-flex flex-column align-items-center justify-content-center">
+                        <div class="p-3">
+                            <h1 class="display-4 text-white mb-3">Shop Online at Flat 70% off on Branded Clothes</h1>
+                            <p class="mx-md-5 px-5">Lorem rebum magna amet lorem magna erat diam stet. Sadips duo stet amet amet ndiam elitr ipsum diam</p>
+                            <a class="btn btn-outline-light py-2 px-4 mt-3" href="#">Shop Now</a>
+                        </div>
                     </div>
                 </div>
             </div>
-
-            <div class="carousel-item">
-                <picture>
-                    <source media="(max-width: 799px)" srcset="{{ asset('front-assets/images/carousel-2-m.jpg') }}" />
-                    <source media="(min-width: 800px)" srcset="{{ asset('front-assets/images/carousel-2.jpg') }}" />
-                    <img src="{{ asset('front-assets/images/carousel-2.jpg') }}" alt="" />
-                </picture>
-
-                <div class="carousel-caption d-flex flex-column align-items-center justify-content-center">
-                    <div class="p-3">
-                        <h1 class="display-4 text-white mb-3">Womens Fashion</h1>
-                        <p class="mx-md-5 px-5">Lorem rebum magna amet lorem magna erat diam stet. Sadips duo stet amet amet ndiam elitr ipsum diam</p>
-                        <a class="btn btn-outline-light py-2 px-4 mt-3" href="#">Shop Now</a>
-                    </div>
-                </div>
-            </div>
-
-            <div class="carousel-item">
-                <picture>
-                    <source media="(max-width: 799px)" srcset="{{ asset('front-assets/images/carousel-3-m.jpg') }}" />
-                    <source media="(min-width: 800px)" srcset="{{ asset('front-assets/images/carousel-3.jpg') }}" />
-                    <img src="{{ asset('front-assets/images/carousel-2.jpg') }}" alt="" />
-                </picture>
-
-                <div class="carousel-caption d-flex flex-column align-items-center justify-content-center">
-                    <div class="p-3">
-                        <h1 class="display-4 text-white mb-3">Shop Online at Flat 70% off on Branded Clothes</h1>
-                        <p class="mx-md-5 px-5">Lorem rebum magna amet lorem magna erat diam stet. Sadips duo stet amet amet ndiam elitr ipsum diam</p>
-                        <a class="btn btn-outline-light py-2 px-4 mt-3" href="#">Shop Now</a>
-                    </div>
-                </div>
-            </div>
+            <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
+                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Previous</span>
+            </button>
+            <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="next">
+                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Next</span>
+            </button>
         </div>
-        <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
-            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-            <span class="visually-hidden">Previous</span>
-        </button>
-        <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="next">
-            <span class="carousel-control-next-icon" aria-hidden="true"></span>
-            <span class="visually-hidden">Next</span>
-        </button>
-    </div>
+    </div> 
 </section>
 
 <section class="section-2">
@@ -141,20 +143,17 @@
                 @php
                     $productImage = $product->product_images->first();
                 @endphp
-                <div class="col-md-3">
+                <div class="col-6 col-md-3">
                     <div class="card product-card">
                         <div class="product-image position-relative">
                             <a href="{{ route('front.product', $product->slug) }}" class="product-img">
-
                                 @if (!empty($productImage->image))
-                                <img class="card-img-top" src="{{ asset('uploads/product/small/'.$productImage->image) }}">
+                                    <img class="card-img-top" src="{{ asset('uploads/product/small/'.$productImage->image) }}">
                                 @else
-                                <img src="{{ asset('admin-assets/img/default-150x150.png') }}">
+                                    <img src="{{ asset('admin-assets/img/default-150x150.png') }}">
                                 @endif
-
                             </a>
                             <a class="whishlist" href="222"><i class="far fa-heart"></i></a>                            
-
                             <div class="product-action">
                                 <a class="btn btn-success" href="javascript:void(0);" onclick="addToCart({{ $product->id }});">
                                     <i class="fa fa-shopping-cart"></i> COMPRAR
@@ -176,8 +175,6 @@
                 </div>  
                 @endforeach
             @endif
-            
-                           
         </div>
     </div>
 </section>
@@ -193,20 +190,17 @@
                 @php
                     $productImage = $product->product_images->first();
                 @endphp
-                <div class="col-md-3">
+                <div class="col-6 col-md-3">
                     <div class="card product-card">
                         <div class="product-image position-relative">
                             <a href="{{ route('front.product', $product->slug) }}" class="product-img">
-
                                 @if (!empty($productImage->image))
-                                <img class="card-img-top" src="{{ asset('uploads/product/small/'.$productImage->image) }}">
+                                    <img class="card-img-top" src="{{ asset('uploads/product/small/'.$productImage->image) }}">
                                 @else
-                                <img src="{{ asset('admin-assets/img/default-150x150.png') }}">
+                                    <img src="{{ asset('admin-assets/img/default-150x150.png') }}">
                                 @endif
-
                             </a>
                             <a class="whishlist" href="222"><i class="far fa-heart"></i></a>                            
-
                             <div class="product-action">
                                 <a class="btn btn-success" href="javascript:void(0);" onclick="addToCart({{ $product->id }});">
                                     <i class="fa fa-shopping-cart"></i> COMPRAR
@@ -231,4 +225,5 @@
         </div>
     </div>
 </section>
+
 @endsection
