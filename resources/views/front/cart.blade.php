@@ -105,7 +105,7 @@
                         </div>
                         
                         <div class="pt-2">
-                            <a href="{{ route('front.checkout') }}" class="btn-dark btn btn-block w-100">Finalizar Pedido</a>
+                            <a href="{{ route('front.checkout') }}" class="btn-dark btn btn-block w-100">Ir para checkout</a>
                         </div>
                     </div>
                 </div>     

@@ -235,6 +235,10 @@ class CartController extends Controller
             $order->first_name = $request->first_name;
             $order->last_name = $request->last_name;
             $order->email = $request->email;
+            
+            $order->payment_status = 'not paid';
+            $order->status = 'pending';
+
             $order->mobile = $request->mobile;
             $order->apartment = $request->apartment;
             $order->address = $request->address;
