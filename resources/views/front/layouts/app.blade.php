@@ -99,7 +99,13 @@
 					</a>
 				</div>
 				<div class="col-lg-6 col-6 text-left d-flex justify-content-end align-items-center">
-					<a href="{{ route('account.profile') }}" class="nav-link text-default">Minha conta</a>
+					
+					@if (Auth::check())
+						<a href="{{ route('account.profile') }}" class="nav-link text-default">Minha conta</a>
+					@else
+						<a href="{{ route('account.login') }}" class="nav-link text-default">Login/Registrar</a>
+					@endif
+
 					<form class="me-3 search-form">
 						<div class="input-group">
 							<input type="text" placeholder="Procurar produtos" class="form-control" aria-label="Procurar produtos">
