@@ -1,7 +1,11 @@
 <?php
 
+use App\Mail\OrderEmail;
 use App\Models\Category;
+use App\Models\Order;
 use App\Models\ProductImage;
+use App\Models\States;
+use Illuminate\Support\Facades\Mail;
 
     function getCategories() {
         return Category::orderBy('name', 'ASC')
@@ -14,5 +18,29 @@ use App\Models\ProductImage;
 
     function getProductImage($productId) {
         return ProductImage::where('product_id', $productId)->first();
+    }
+
+    function orderEmail($orderId, $userType) {
+        $order = Order::where('id', $orderId)->with('items')->first();
+
+        if($userType == 'customer') {
+            $subject = 'Obrigado por comprar na Hidromax';
+            $email = $order->email;
+        } else {
+            $subject = 'Você recebeu um novo pedido!';
+            $email = env('ADMIN_EMAIL');
+        }
+        
+        $mailData = [
+            'subject' => $subject,
+            'order' => $order,
+            'userType' => $userType
+        ];
+
+        Mail::to($email)->send(new OrderEmail($mailData));
+    }
+
+    function getStateInfo($id) {
+        return States::where('id', $id)->first();
     }
 ?>

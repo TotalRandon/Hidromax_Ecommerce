@@ -43,7 +43,11 @@
                                         <!-- Text -->
                                         <p class="mb-lg-0 fs-sm fw-bold">
                                             <time datetime="2019-10-01">
-                                                {{ \Carbon\Carbon::parse($order->created_at)->locale('pt-BR')->translatedFormat('d M, Y') }}
+                                                @if (!empty($order->shipped_date))
+                                                    {{ \Carbon\Carbon::parse($order->created_at)->locale('pt-BR')->translatedFormat('d M, Y') }}
+                                                @else
+                                                    n/a  
+                                                @endif
                                             </time>
                                         </p>
                                     </div>
@@ -56,6 +60,8 @@
                                                 <span class="badge bg-danger">Pagamento pendente</span>
                                             @elseif ($order->status == 'shipped')
                                                 <span class="badge bg-info">Enviado</span>
+                                            @elseif ($order->status == 'cancelled')
+                                                <span class="badge bg-danger">Cancelado</span>
                                             @else
                                                 <span class="badge bg-success">Entrege</span>
                                             @endif
@@ -77,7 +83,7 @@
                     <div class="card-footer p-3">
 
                         <!-- Heading -->
-                        <h6 class="mb-7 h5 mt-4">Lista de produtos ()</h6>
+                        <h6 class="mb-7 h5 mt-4">Lista de produtos ({{ $orderItemsCount }})</h6>
 
                         <!-- Divider -->
                         <hr class="my-3">
