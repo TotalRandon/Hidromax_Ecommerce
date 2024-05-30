@@ -47,6 +47,8 @@
                                                     <span class="badge bg-danger">Pagamento pendente</span>
                                                 @elseif ($order->status == 'shipped')
                                                     <span class="badge bg-info">Enviado</span>
+                                                @elseif ($order->status == 'cancelled')
+                                                    <span class="badge bg-danger">Cancelado</span>
                                                 @else
                                                     <span class="badge bg-success">Entrege</span>
                                                 @endif

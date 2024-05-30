@@ -51,13 +51,13 @@
                         <p>Fretes</p>
                     </a>
                 </li>							
-                {{-- <li class="nav-item">
-                    <a href="orders.html" class="nav-link">
+                <li class="nav-item">
+                    <a href="{{ route('orders.index') }}" class="nav-link">
                         <i class="nav-icon fas fa-shopping-bag"></i>
                         <p>Pedidos</p>
                     </a>
                 </li>
-                <li class="nav-item">
+                {{-- <li class="nav-item">
                     <a href="discount.html" class="nav-link">
                         <i class="nav-icon  fa fa-percent" aria-hidden="true"></i>
                         <p>Descontos</p>
