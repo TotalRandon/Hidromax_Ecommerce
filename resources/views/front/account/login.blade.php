@@ -12,16 +12,16 @@
     </div>
 </section>
 
-<section class=" section-10">
+<section class="section-10">
     <div class="container">
-        @if (Session::has('success'))
+        @if (session('success'))
             <div class="alert alert-success">
-                {{ Session::get('success') }}
+                {{ session('success') }}
             </div>
         @endif
-        @if (Session::has('error'))
+        @if (session('error'))
             <div class="alert alert-danger">
-                {{ Session::get('error') }}
+                {{ session('error') }}
             </div>
         @endif
         <div class="login-form">    

@@ -28,22 +28,15 @@ class AuthController extends Controller
             'password' => 'required|min:8|confirmed'
         ]);
 
-        // if($validator->fails()) {
-        //     return response()->json([
-        //         'status' => false,
-        //         'errors' => $validator->errors()
-        //     ]);
-        // }
         if($validator->passes()) {
+            $user = new User;
+            $user->name = $request->name;
+            $user->email = $request->email;
+            $user->phone = $request->phone;
+            $user->password = Hash::make($request->password);
+            $user->save();
 
-        $user = new User;
-        $user->name = $request->name;
-        $user->email = $request->email;
-        $user->phone = $request->phone;
-        $user->password = Hash::make($request->password);
-        $user->save();
-
-        session()->flash('success', 'Usuario registrado com sucesso');
+            session()->flash('success', 'Usuario registrado com sucesso');
 
             return response()->json([
                 'status' => true,
@@ -55,6 +48,7 @@ class AuthController extends Controller
             ]);
         }
     }
+
     public function authenticate(Request $request)
     {
         $validator = Validator::make($request->all(),[
@@ -63,26 +57,21 @@ class AuthController extends Controller
         ]);
 
         if ($validator->passes()) {
-
             if(Auth::attempt(['email' => $request->email, 'password' => $request->password], $request->get('remember'))) {
-                
                 if(session()->has('url.intended')) {
                     return redirect(session()->get('url.intended'));
                 }
 
                 return redirect()->route('account.profile');
-
             } else {
-                //session()->flash('error', 'Email/senha estão incorretos');
                 return redirect()->route('account.login')
-                ->with($request->only('email'))
-                ->with('error', 'Email/senha estão incorretos');
+                    ->with($request->only('email'))
+                    ->with('error', 'Email/senha estão incorretos');
             }
-
         } else {
             return redirect()->route('account.login')
-            ->withErrors($validator)    
-            ->withInput($request->only('email'));
+                ->withErrors($validator)
+                ->withInput($request->only('email'));
         }
     }
 
@@ -92,8 +81,11 @@ class AuthController extends Controller
 
     public function logout() {
         Auth::logout();
+        session()->invalidate();
+        session()->regenerateToken();
+
         return redirect()->route('account.login')
-        ->with('success', 'Você deslogou da sua conta');
+            ->with('success', 'Você deslogou da sua conta');
     }
 
     public function orders() {
