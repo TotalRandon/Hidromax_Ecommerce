@@ -18,11 +18,11 @@
             <form action="{{ route('account.processRegister') }}" method="post" name="registrationForm" id="registrationForm">
                 <h4 class="modal-title">Cadastre-se agora</h4>
                 <div class="form-group">
-                    <input type="text" class="form-control" placeholder="Nome" id="name" name="name">
+                    <input type="text" class="form-control" placeholder="Nome*" id="name" name="name">
                     <p></p>
                 </div>
                 <div class="form-group">
-                    <input type="text" class="form-control" placeholder="Email" id="email" name="email">
+                    <input type="text" class="form-control" placeholder="Email*" id="email" name="email">
                     <p></p>
                 </div>
                 <div class="form-group">
@@ -30,19 +30,19 @@
                     <p></p>
                 </div>
                 <div class="form-group">
-                    <input type="password" class="form-control" placeholder="Senha" id="password" name="password">
+                    <input type="password" class="form-control" placeholder="Senha*" id="password" name="password">
                     <p></p>
                 </div>
                 <div class="form-group">
-                    <input type="password" class="form-control" placeholder="confirmar senha" id="password_confirmation" name="password_confirmation">
+                    <input type="password" class="form-control" placeholder="confirmar senha*" id="password_confirmation" name="password_confirmation">
                     <p></p>
                 </div>
                 <div class="form-group small">
-                    <a href="#" class="forgot-link">Esqueci a senha?</a>
+                    <a href="#" class="forgot-link">Esqueci a senha</a>
                 </div> 
                 <button type="submit" class="btn btn-dark btn-block btn-lg" value="Register">Confirmar</button>
             </form>			
-            <div class="text-center small">Já possui conta? <a href="{{ route('account.login') }}">Fazer login</a></div>
+            <div class="text-center small">Já possui cadastro? <a href="{{ route('account.login') }}">Fazer login</a></div>
         </div>
     </div>
 </section>
@@ -91,6 +91,7 @@
                         $("#password").siblings("p").removeClass('invalid-feedback').html('');
                         $("#password").removeClass('is-invalid');
                     }
+
                 } else {
 
                     $("#name").siblings("p").removeClass('invalid-feedback').html('');
