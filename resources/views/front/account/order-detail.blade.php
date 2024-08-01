@@ -39,7 +39,7 @@
                                     </div>
                                     <div class="col-6 col-lg-3">
                                         <!-- Heading -->
-                                        <h6 class="heading-xxxs text-muted">Data da compra</h6>
+                                        <h6 class="heading-xxxs text-muted">Data da compra:</h6>
                                         <!-- Text -->
                                         <p class="mb-lg-0 fs-sm fw-bold">
                                             <time datetime="2019-10-01">
@@ -69,12 +69,48 @@
                                     </div>
                                     <div class="col-6 col-lg-3">
                                         <!-- Heading -->
-                                        <h6 class="heading-xxxs text-muted">Valor total do pedido:</h6>
+                                        <h6 class="heading-xxxs text-muted">Valor total:</h6>
                                         <!-- Text -->
                                         <p class="mb-0 fs-sm fw-bold">
                                         R$ {{ number_format($order->grand_total, 2, ',', '.') }}
                                         </p>
                                     </div>
+                                    <div class="col-6 col-lg-3 mt-5">
+                                        <h6 class="heading-xxxs text-muted">Endereço:</h6>
+
+                                        <p class="mb-0 fs-sm fw-bold">
+                                            {{ $order->address }}
+                                        </p>
+                                    </div>
+                                    <div class="col-6 col-lg-3 mt-5">
+                                        <h6 class="heading-xxxs text-muted">Cidade:</h6>
+
+                                        <p class="mb-0 fs-sm fw-bold">
+                                            {{ $order->city }}
+                                        </p>
+                                    </div>
+
+                                    @php
+                                        function formatZip($zip) {
+                                            return substr($zip, 0, 5) . '-' . substr($zip, 5, 3);
+                                        }
+                                    @endphp
+
+                                    <div class="col-6 col-lg-3 mt-5">
+                                        <h6 class="heading-xxxs text-muted">CEP:</h6>
+
+                                        <p class="mb-0 fs-sm fw-bold">
+                                            {{ formatZip($order->zip) }}
+                                        </p>
+                                    </div>
+                                    
+                                </div>
+                                <div class="col-6 col-lg-12 mt-5">
+                                    <h6 class="heading-xxxs text-muted">OBS: </h6>
+
+                                    <p class="mb-0 fs-sm fw-bold">
+                                        {{ $order->notes }}
+                                    </p>
                                 </div>
                             </div>
                         </div>

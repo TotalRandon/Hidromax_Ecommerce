@@ -26,13 +26,23 @@
                     <div class="card-header pt-3">
                         <div class="row invoice-info">
                             <div class="col-sm-4 invoice-col">
+                            @php
+                                function formatZip($zip) {
+                                    return substr($zip, 0, 5) . '-' . substr($zip, 5, 3);
+                                }
+                            @endphp
                             <h1 class="h5 mb-3">Endereço de Entrega</h1>
                             <address>
                                 <strong>{{ $order->first_name.' '.$order->last_name }}</strong><br>
                                 {{ $order->address }}<br>
-                                {{ $order->city }}, {{ $order->zip }}, {{ $order->stateName }}<br>
+                                {{ $order->city }}, {{ formatZip($order->zip) }}, {{ $order->stateName }}<br>
                                 Telefone: {{ $order->mobile }}<br>
-                                Email: {{ $order->email }}
+                                Email: {{ $order->email }}<br>
+                                @if (!empty($order->notes))
+                                    Obs: {{ $order->notes }}
+                                @else
+                                    Obs: n/a
+                                @endif
                             </address>
                             <strong>Data de Envio: </strong>
                             @if (!empty($order->shipped_date))
