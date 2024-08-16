@@ -32,10 +32,12 @@
             function formatZip($zip) {
                 return substr($zip, 0, 5) . '-' . substr($zip, 5, 3);
             }
+
+            $stateName = \App\Models\States::find($mailData['order']->state_id)->name;
             @endphp
             <strong>{{ $mailData['order']->first_name . ' ' . $mailData['order']->last_name }}</strong><br>
             {{ $mailData['order']->address }}<br>
-            {{ $mailData['order']->city }}, {{ formatZip($mailData['order']->zip) }}, {{ git push origim Fix/pedidoDetalhado($mailData['order']->state_id)->name }}<br>
+            {{ $mailData['order']->city }}, {{ formatZip($mailData['order']->zip) }}, {{ ($stateName) }} <br>
             Telefone: {{ $mailData['order']->mobile }}<br>
             Email: {{ $mailData['order']->email }}<br>
             Obs: {{ $mailData['order']->notes }}
