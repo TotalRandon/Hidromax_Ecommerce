@@ -24,14 +24,14 @@
     
                 <div class="carousel-item">
                     <picture>
-                        <source media="(max-width: 799px)" srcset="{{ asset('front-assets/images/carousel-2-m.jpg') }}" />
-                        <source media="(min-width: 800px)" srcset="{{ asset('front-assets/images/carousel-2.jpg') }}" />
-                        <img src="{{ asset('front-assets/images/carousel-2.jpg') }}" alt="" />
+                        <source media="(max-width: 799px)" srcset="{{ asset('front-assets/images/Carroceu2 - M.png') }}" />
+                        <source media="(min-width: 800px)" srcset="{{ asset('front-assets/images/Carroceu2 - G.png') }}" />
+                        <img src="{{ asset('front-assets/images/Carroceu2 - G.png') }}" alt="" />
                     </picture>
     
                     <div class="carousel-caption d-flex flex-column align-items-center justify-content-center">
                         <div class="p-3">
-                            <h1 class="display-4 text-white mb-3">Womens Fashion</h1>
+                            <h1 class="display-4 text-white mb-3">Confira as promoções!</h1>
                             <p class="mx-md-5 px-5">Lorem rebum magna amet lorem magna erat diam stet. Sadips duo stet amet amet ndiam elitr ipsum diam</p>
                             <a class="btn btn-outline-light py-2 px-4 mt-3" href="#">Shop Now</a>
                         </div>
@@ -40,14 +40,30 @@
     
                 <div class="carousel-item">
                     <picture>
-                        <source media="(max-width: 799px)" srcset="{{ asset('front-assets/images/carousel-3-m.jpg') }}" />
-                        <source media="(min-width: 800px)" srcset="{{ asset('front-assets/images/carousel-3.jpg') }}" />
-                        <img src="{{ asset('front-assets/images/carousel-2.jpg') }}" alt="" />
+                        <source media="(max-width: 799px)" srcset="{{ asset('front-assets/images/Carroceu3 - M.png') }}" />
+                        <source media="(min-width: 800px)" srcset="{{ asset('front-assets/images/Carroceu3 - G.png') }}" />
+                        <img src="{{ asset('front-assets/images/Carroceu3 - G.png') }}" alt="" />
                     </picture>
     
                     <div class="carousel-caption d-flex flex-column align-items-center justify-content-center">
                         <div class="p-3">
-                            <h1 class="display-4 text-white mb-3">Shop Online at Flat 70% off on Branded Clothes</h1>
+                            <h1 class="display-4 text-white mb-3">Loja com muitas variedades!</h1>
+                            <p class="mx-md-5 px-5">Lorem rebum magna amet lorem magna erat diam stet. Sadips duo stet amet amet ndiam elitr ipsum diam</p>
+                            <a class="btn btn-outline-light py-2 px-4 mt-3" href="#">Shop Now</a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="carousel-item">
+                    <picture>
+                        <source media="(max-width: 799px)" srcset="{{ asset('front-assets/images/Carroceu4 - M.png') }}" />
+                        <source media="(min-width: 800px)" srcset="{{ asset('front-assets/images/Carroceu4 - G.png') }}" />
+                        <img src="{{ asset('front-assets/images/Carroceu4 - G.png') }}" alt="" />
+                    </picture>
+    
+                    <div class="carousel-caption d-flex flex-column align-items-center justify-content-center">
+                        <div class="p-3">
+                            <h1 class="display-4 text-white mb-3">Confira nossas churrasqueiras</h1>
                             <p class="mx-md-5 px-5">Lorem rebum magna amet lorem magna erat diam stet. Sadips duo stet amet amet ndiam elitr ipsum diam</p>
                             <a class="btn btn-outline-light py-2 px-4 mt-3" href="#">Shop Now</a>
                         </div>
