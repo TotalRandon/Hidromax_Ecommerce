@@ -120,7 +120,7 @@
                         <a class="whishlist" href="222"><i class="far fa-heart"></i></a>                            
 
                         <div class="product-action">
-                            <a class="btn btn-lg btn-success" href="javascript:void(0);" onclick="addToCart({{ $product->id }});">
+                            <a class="btn btn-lg btn-success" href="javascript:void(0);" onclick="addToCart({{ $relProduct->id }});">
                                 <i class="fa fa-shopping-cart"></i> COMPRAR
                             </a>                            
                         </div>
