@@ -75,11 +75,11 @@
 		<div class="container">
 			<div class="row align-items-center justify-content-between text-light">
 				<div class="col-12 d-md-none">
-					<a href="#" class="text-white d-block">Compre pelo WhatsApp (somente vendas) (19) 98417-7899</a>
+					<a href="https://wa.me/+5519984177899" class="text-white d-block">Compre ou faça seu orçamento pelo WhatsApp (19) 98417-7899</a>
 				</div>
 				<div class="col-md-6 d-none d-md-block">
-					<a href="#" class="text-white">SBO</a>
-					<a href="#" class="text-white">Compre pelo WhatsApp (somente vendas) (19) 98417-7899</a>
+					<a href="https://g.co/kgs/cfvoxGV" class="text-white">LOJA | SBO</a>
+					<a href="https://wa.me/+5519984177899" class="text-white">Compre ou faça seu orçamento pelo WhatsApp (19) 98417-7899</a>
 				</div>
 				<div class="col-md-6 d-none d-md-block text-end">
 					<a href="#" class="text-white">Dicas de segurança</a>
@@ -88,54 +88,52 @@
 			</div>
 		</div>
 	</div>
-	
-	
-	<div class="top-header" style="background-color: #091442">
+
+	<div class="top-header" style="background-color: #091442; padding: 10px 0;">
 		<div class="container">
-			<div class="row align-items-center py-3 d-none d-lg-flex justify-content-between">
-				<div class="col-lg-4 logo">
+			<div class="row align-items-center justify-content-between">
+				<!-- Logotipo -->
+				<div class="col-lg-2 col-3 text-left">
 					<a href="{{ route('front.home') }}" class="text-decoration-none">
-						<img src="{{ asset('front-assets/images/Hidromax_logo.png') }}" alt="Hidromax Logo" class="img-fluid w-25">
+						<img src="{{ asset('front-assets/images/Hidromax_logo.png') }}" alt="Hidromax Logo" class="img-fluid" style="max-width: 130px;">
 					</a>
 				</div>
-				<div class="col-lg-6 col-6 text-left d-flex justify-content-end align-items-center">
-					
-					@if (Auth::check())
-						<a href="{{ route('account.profile') }}" class="nav-link text-default">Minha conta</a>
-					@else
-						<a href="{{ route('account.login') }}" class="nav-link text-default">Login/Registrar</a>
-					@endif
-
-					<form class="me-3 search-form">
+				
+				<!-- Campo de busca -->
+				<div class="col-lg-7 col-6">
+					<form class="search-form">
 						<div class="input-group">
-							<input type="text" placeholder="Procurar produtos" class="form-control" aria-label="Procurar produtos">
-							<button class="btn btn-outline-primary" type="submit">
-								<i class="fa fa-search"></i>
+							<input type="text" placeholder="O que você procura?" class="form-control" aria-label="Procurar produtos" style="border-radius: 20px 0 0 20px; border: none; padding: 10px;">
+							<button class="btn btn-light" type="submit" style="border-radius: 0 20px 20px 0; border: none;">
+								<i class="fa fa-search" style="font-size: 1.2rem; color: #091442;"></i>
 							</button>
 						</div>
 					</form>
-					<div class="right-nav py-0">
-						<a href="{{ route('front.cart') }}" class="ml-3 d-flex align-items-center position-relative">
-							<i class="fas fa-shopping-cart text-primary"></i>
-							<!-- Badge para indicar a quantidade de itens no carrinho -->
-							<span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
-								3 <!-- Dinamicamente atualizar este número com JavaScript ou no backend -->
-								<span class="visually-hidden">itens no carrinho</span>
-							</span>
-						</a>
-					</div>
+				</div>
+	
+				<!-- Conta e Carrinho -->
+				<div class="col-lg-3 col-3 d-flex align-items-center justify-content-end">
+					<a href="{{ route('account.profile') }}" class="nav-link text-white me-4">
+						<i class="fa fa-user" style="font-size: 1.5rem;"></i>
+					</a>
+					<a href="{{ route('front.cart') }}" class="position-relative">
+						<i class="fas fa-shopping-cart text-white" style="font-size: 1.5rem;"></i>
+						<span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+							3
+							<span class="visually-hidden">itens no carrinho</span>
+						</span>
+					</a>
 				</div>
 			</div>
 		</div>
 	</div>
 	
-
 <header class="bg-dark">
 	<div class="container">
 		<nav class="navbar navbar-expand-xl" id="navbar">
 			<a href="{{ route('front.home') }}" class="text-decoration-none mobile-logo">
-				<span class="h2 text-uppercase text-primary bg-dark">Hidromax</span>
-				<span class="h2 text-uppercase text-white px-2">Materias</span>
+				<span class="h2 text-uppercase text-primary bg-dark"> < Explorar</span>
+				<span class="h2 text-uppercase text-white px-2">Categorias</span>
 			</a>
 			<button class="navbar-toggler menu-btn" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
       			<!-- <span class="navbar-toggler-icon icon-menu"></span> -->
@@ -216,9 +214,9 @@
 				<div class="footer-card">
 					<h3>Minha conta</h3>
 					<ul>
-						<li><a href="#" title="Sell">Login</a></li>
-						<li><a href="#" title="Advertise">Registrar</a></li>
-						<li><a href="#" title="Contact Us">Meus pedidos</a></li>						
+						<li><a href="{{ route("account.login") }}" title="Login">Login</a></li>
+						<li><a href="{{ route("account.register") }}" title="Registro">Registrar</a></li>
+						<li><a href="{{ route("account.orders") }}" title="Meus pedidos">Meus pedidos</a></li>						
 					</ul>
 				</div>
 			</div>			
