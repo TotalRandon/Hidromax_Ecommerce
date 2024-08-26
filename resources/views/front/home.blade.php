@@ -158,9 +158,10 @@
                 @foreach ($featuredProducts as $product)
                 @php
                     $productImage = $product->product_images->first();
+                    $cardOpacity = $product->qty == 0 && $product->track_qty == 'yes' ? 'opacity-50' : '';
                 @endphp
                 <div class="col-6 col-md-3">
-                    <div class="card product-card">
+                    <div class="card product-card {{ $cardOpacity }}">
                         <div class="product-image position-relative">
                             <a href="{{ route('front.product', $product->slug) }}" class="product-img">
                                 @if (!empty($productImage->image))
@@ -171,9 +172,22 @@
                             </a>
                             <a class="whishlist" href="222"><i class="far fa-heart"></i></a>                            
                             <div class="product-action">
+                                @if ($product->track_qty == 'yes')
+                                    @if ($product->qty > 0)
+                                    <a class="btn btn-success" href="javascript:void(0);" onclick="addToCart({{ $product->id }});">
+                                        <i class="fa fa-shopping-cart"></i> COMPRAR
+                                    </a>
+                                    @else 
+                                    <a class="btn btn-danger" href="javascript:void(0);">
+                                        ESGOTADO
+                                    </a>
+                                    @endif  
+                                
+                                @else
                                 <a class="btn btn-success" href="javascript:void(0);" onclick="addToCart({{ $product->id }});">
                                     <i class="fa fa-shopping-cart"></i> COMPRAR
-                                </a>                            
+                                </a>
+                                @endif                         
                             </div>
                         </div>                        
                         <div class="card-body text-right">
@@ -192,6 +206,8 @@
                 @endforeach
             @endif
         </div>
+        
+        
     </div>
 </section>
 
@@ -205,9 +221,10 @@
                 @foreach ($latestProducts as $product)
                 @php
                     $productImage = $product->product_images->first();
+                    $cardOpacity = $product->qty == 0 && $product->track_qty == 'yes' ? 'opacity-50' : '';
                 @endphp
                 <div class="col-6 col-md-3">
-                    <div class="card product-card">
+                    <div class="card product-card {{ $cardOpacity }}">
                         <div class="product-image position-relative">
                             <a href="{{ route('front.product', $product->slug) }}" class="product-img">
                                 @if (!empty($productImage->image))
@@ -216,12 +233,27 @@
                                     <img src="{{ asset('admin-assets/img/default-150x150.png') }}">
                                 @endif
                             </a>
-                            <a class="whishlist" href="222"><i class="far fa-heart"></i></a>                            
+                            <a class="whishlist" href="222"><i class="far fa-heart"></i></a>  
+
                             <div class="product-action">
+                                @if ($product->track_qty == 'yes')
+                                    @if ($product->qty > 0)
+                                    <a class="btn btn-success" href="javascript:void(0);" onclick="addToCart({{ $product->id }});">
+                                        <i class="fa fa-shopping-cart"></i> COMPRAR
+                                    </a>
+                                    @else 
+                                    <a class="btn btn-danger" href="javascript:void(0);">
+                                        ESGOTADO
+                                    </a>
+                                    @endif  
+                                
+                                @else
                                 <a class="btn btn-success" href="javascript:void(0);" onclick="addToCart({{ $product->id }});">
                                     <i class="fa fa-shopping-cart"></i> COMPRAR
-                                </a>                            
+                                </a>
+                                @endif                         
                             </div>
+
                         </div>                      
                         <div class="card-body text-right">
                             <a class="h6 link" href="{{ route('front.product', $product->slug) }}">{{ Str::limitText($product->title, 45) }}</a>

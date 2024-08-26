@@ -132,8 +132,8 @@
                                 <div class="col-md-12">
                                     <div class="mb-3">
                                         <div class="custom-control custom-checkbox">
-                                            <input type="hidden" name="track_qty" value="No">
-                                            <input class="custom-control-input" type="checkbox" id="track_qty" name="track_qty" value="Yes" {{ ($product->track_qty == 'Yes') ? 'checked' : '' }}>
+                                            <input type="hidden" name="track_qty" value="no">
+                                            <input class="custom-control-input" type="checkbox" id="track_qty" name="track_qty" value="yes" {{ ($product->track_qty == 'yes') ? 'checked' : '' }}>
                                             <label for="track_qty" class="custom-control-label">Rastrear Quantidade</label>
                                             <p class="error"></p>
                                         </div>

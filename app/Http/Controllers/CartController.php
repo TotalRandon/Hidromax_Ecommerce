@@ -262,6 +262,16 @@ class CartController extends Controller
             $orderItem->price = $item->price;
             $orderItem->total = $item->price * $item->qty;
             $orderItem->save();
+
+        // Atualizar Estoque do produto
+            $productData = Product::find($item->id);
+            if ($productData->track_qty == 'yes') {
+                $currentQty = $productData->qty;
+                $updateQty = $currentQty - $item->qty;
+                $productData->qty = $updateQty;
+                $productData->save();
+            }
+            
         }
 
         // Enviando email de compra realizada
