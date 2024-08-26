@@ -47,7 +47,7 @@ class ProductController extends Controller
             'slug' => 'required|unique:products',
             'price' => 'required|numeric',
             'sku' => 'required|unique:products',
-            'track_qty' => 'required|in:Yes,No',
+            'track_qty' => 'required|in:yes,no',
             'category' => 'required|numeric',
             'is_featured' => 'required|in:yes,no',
         ];
@@ -194,12 +194,12 @@ class ProductController extends Controller
             'slug' => 'required|unique:products,slug,' . $product->id . ',id',
             'price' => 'required|numeric',
             'sku' => 'required|unique:products,sku,' . $product->id . ',id',
-            'track_qty' => 'required|in:Yes,No',
+            'track_qty' => 'required|in:yes,no',
             'category' => 'required|numeric',
             'is_featured' => 'required|in:yes,no',
         ];
 
-        if (!empty($request->track_qty) && $request->track_qty == 'Yes') {
+        if (!empty($request->track_qty) && $request->track_qty == 'yes') {
             $rules['qty'] = 'required|numeric';
         }
 

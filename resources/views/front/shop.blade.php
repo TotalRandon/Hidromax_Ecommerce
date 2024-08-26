@@ -115,10 +115,11 @@
                     @foreach ($products as $product)
                     @php
                         $productImage = $product->product_images->first();
+                        $cardOpacity = $product->qty == 0 && $product->track_qty == 'yes' ? 'opacity-50' : '';
                     @endphp
             
                     <div class="col-6 col-md-4">
-                        <div class="card product-card">
+                        <div class="card product-card {{ $cardOpacity }}">
                             <div class="product-image position-relative">
             
                                 <a href="{{ route('front.product', $product->slug) }}" class="product-img">
@@ -132,9 +133,22 @@
                                 <a class="whishlist" href="222"><i class="far fa-heart"></i></a>                            
             
                                 <div class="product-action">
-                                    <a class="btn btn-lg btn-success" href="javascript:void(0);" onclick="addToCart({{ $product->id }});">
+                                    @if ($product->track_qty == 'yes')
+                                        @if ($product->qty > 0)
+                                        <a class="btn btn-success" href="javascript:void(0);" onclick="addToCart({{ $product->id }});">
+                                            <i class="fa fa-shopping-cart"></i> COMPRAR
+                                        </a>
+                                        @else 
+                                        <a class="btn btn-danger" href="javascript:void(0);">
+                                            ESGOTADO
+                                        </a>
+                                        @endif  
+                                    
+                                    @else
+                                    <a class="btn btn-success" href="javascript:void(0);" onclick="addToCart({{ $product->id }});">
                                         <i class="fa fa-shopping-cart"></i> COMPRAR
-                                    </a>                            
+                                    </a>
+                                    @endif                         
                                 </div>
                             </div>                        
                             <div class="card-body text-right">

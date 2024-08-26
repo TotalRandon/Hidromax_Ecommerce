@@ -85,7 +85,7 @@ class ShopController extends Controller
         // encontrar produtos relacionados  
         if ($product->related_products != ''){
             $productArray = explode(',', $product->related_products);
-            $relatedProducts = Product::WhereIn('id', $productArray)->with('product_images')->get();
+            $relatedProducts = Product::WhereIn('id', $productArray)->with('product_images')->where('status', 1)->get();
         }
 
         $data['product'] = $product;

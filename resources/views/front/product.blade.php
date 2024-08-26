@@ -60,7 +60,25 @@
 
                     {!! $product->short_description !!}
 
-                    <a href="javascript:void(0);" onclick="addToCart({{ $product->id }});" class="btn btn-lg btn-success"><i class="fas fa-shopping-cart"></i> &nbsp;COMPRAR</a>
+                    {{-- <a href="javascript:void(0);" onclick="addToCart({{ $product->id }});" class="btn btn-lg btn-success"><i class="fas fa-shopping-cart"></i> &nbsp;COMPRAR</a> --}}
+                    <div class="product-action">
+                        @if ($product->track_qty == 'yes')
+                            @if ($product->qty > 0)
+                            <a class="btn btn-success" href="javascript:void(0);" onclick="addToCart({{ $product->id }});">
+                                <i class="fa fa-shopping-cart"></i> &nbsp;COMPRAR
+                            </a>
+                            @else 
+                            <a class="btn btn-danger" href="javascript:void(0);">
+                                ESGOTADO
+                            </a>
+                            @endif  
+                        
+                        @else
+                        <a class="btn btn-success" href="javascript:void(0);" onclick="addToCart({{ $product->id }});">
+                            <i class="fa fa-shopping-cart"></i> &nbsp;COMPRAR
+                        </a>
+                        @endif                         
+                    </div>
                 </div>
             </div>
 
@@ -105,8 +123,9 @@
                 @foreach ($relatedProducts as $relProduct)
                 @php
                     $productImage = $relProduct->product_images->first();
+                    $cardOpacity = $relProduct->qty == 0 && $relProduct->track_qty == 'yes' ? 'opacity-50' : '';
                 @endphp
-                <div class="card product-card">
+                <div class="card product-card {{ $cardOpacity }}">
                     <div class="product-image position-relative">
                         <a href="{{ route('front.product', $relProduct->slug) }}" class="product-img">
 
@@ -120,10 +139,25 @@
                         <a class="whishlist" href="222"><i class="far fa-heart"></i></a>                            
 
                         <div class="product-action">
+                            
+                            @if ($relProduct->track_qty == 'yes')
+                            @if ($relProduct->qty > 0)
                             <a class="btn btn-lg btn-success" href="javascript:void(0);" onclick="addToCart({{ $relProduct->id }});">
                                 <i class="fa fa-shopping-cart"></i> COMPRAR
-                            </a>                            
+                            </a>
+                            @else 
+                            <a class="btn btn-lg btn-danger" href="javascript:void(0);">
+                                ESGOTADO
+                            </a>
+                            @endif  
+                        
+                        @else
+                        <a class="btn btn-lg btn-success" href="javascript:void(0);" onclick="addToCart({{ $relProduct->id }});">
+                            <i class="fa fa-shopping-cart"></i> COMPRAR
+                        </a>
+                        @endif 
                         </div>
+                        
                     </div>                        
                     <div class="card-body text-right">
                         <a class="h6 link" href="">{{ Str::limitText($relProduct->title, 45) }}</a>
