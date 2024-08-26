@@ -40,7 +40,10 @@
                 <div class="bg-light right">
                     <h1>{{ $product->title }}</h1>
                     @if ($product->barcode > 0)
-                        <p>COD. {{ $product->barcode }}</p>
+                        <p>Cod. {{ $product->barcode }}</p>
+                    @endif
+                    @if ($product->qty <= 20 && $product->qty > 0) 
+                        <p>Restam apenas {{ $product->qty }} Unidades!</p>
                     @endif
                     <div class="d-flex mb-3">
                         <div class="text-primary mr-2">
