@@ -39,12 +39,12 @@
             <div class="col-md-7">
                 <div class="bg-light right">
                     <h1>{{ $product->title }}</h1>
-                    @if ($product->barcode > 0)
-                        <p>Cod. {{ $product->barcode }}</p>
-                    @endif
-                    @if ($product->qty <= 20 && $product->qty > 0) 
-                        <p>Restam apenas {{ $product->qty }} Unidades!</p>
-                    @endif
+                    <div>
+                        @if ($product->barcode > 0)
+                            <p>Cod. {{ $product->barcode }}</p>
+                        @endif
+                    </div>
+                    
                     <div class="d-flex mb-3">
                         <div class="text-primary mr-2">
                             <small class="fas fa-star"></small>
@@ -80,7 +80,18 @@
                         <a class="btn btn-success" href="javascript:void(0);" onclick="addToCart({{ $product->id }});">
                             <i class="fa fa-shopping-cart"></i> &nbsp;COMPRAR
                         </a>
-                        @endif                         
+                        @endif 
+                        <div class="d-inline-flex p-4">
+                            @if ($product->qty <= 20 && $product->qty > 1)
+                                <p class="btn alert-warning border border-warning">
+                                    Restam apenas {{ $product->qty }} Unidades!
+                                </p>
+                            @elseif ($product->qty == 1)
+                                <p class="btn alert-danger border border-danger">
+                                    Restam apenas {{ $product->qty }} Unidade!
+                                </p>
+                            @endif
+                        </div>                        
                     </div>
                 </div>
             </div>
