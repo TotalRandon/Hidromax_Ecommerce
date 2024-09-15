@@ -67,7 +67,7 @@
                     <div class="product-action">
                         @if ($product->track_qty == 'yes')
                             @if ($product->qty > 0)
-                            <a class="btn btn-success" href="javascript:void(0);" onclick="addToCart({{ $product->id }});">
+                            <a class="btn btn-lg btn-success" href="javascript:void(0);" onclick="addToCart({{ $product->id }});">
                                 <i class="fa fa-shopping-cart"></i> &nbsp;COMPRAR
                             </a>
                             @else 
@@ -77,12 +77,12 @@
                             @endif  
                         
                         @else
-                        <a class="btn btn-success" href="javascript:void(0);" onclick="addToCart({{ $product->id }});">
+                        <a class="btn btn-lg btn-success" href="javascript:void(0);" onclick="addToCart({{ $product->id }});">
                             <i class="fa fa-shopping-cart"></i> &nbsp;COMPRAR
                         </a>
                         @endif 
                         <div class="d-inline-flex p-4">
-                            @if ($product->qty <= 20 && $product->qty > 1)
+                            @if ($product->qty <= 10 && $product->qty > 1)
                                 <p class="btn alert-warning border border-warning">
                                     Restam apenas {{ $product->qty }} Unidades!
                                 </p>
