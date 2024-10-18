@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\CustomerAddress;
 use App\Models\Order;
 use App\Models\OrderItem;
+use App\Models\States;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -76,7 +78,84 @@ class AuthController extends Controller
     }
 
     public function profile() {
-        return view('front.account.profile');
+        $userId = Auth::user()->id;
+
+        $state = States::orderBy('name', 'ASC')->get();
+
+        $user = User::where('id', $userId)->first();
+
+        $address = CustomerAddress::where('user_id', $userId)->first();
+        return view('front.account.profile',[
+            'user' => $user,
+            'states' => $state,
+            'address' => $address
+        ]);
+    }
+
+    public function updateProfile(Request $request){
+        $userId = Auth::user()->id;
+        $validator = Validator::make($request->all(),[
+            'name' => 'required',
+            'phone' => 'required',
+            'email' => 'required|email|unique:users,email,'.$userId.',id'        
+        ]);
+
+        if ($validator->passes()) {
+            $user = User::find($userId);
+            $user->name = $request->name;
+            $user->phone = $request->phone;
+            $user->email = $request->email;
+            $user->save();
+
+            session()->flash('success', 'Dados básicos atualizados com sucesso!');
+
+            return response()->json([
+                'status' => true,
+                'message' => 'Dados básicos atualizados com sucesso!'
+            ]);
+
+        } else {
+            return response()->json([
+                'status' => false,
+                'errors' => $validator->errors()
+            ]);
+        }
+    }
+
+    public function updateAddress(Request $request){
+        $userId = Auth::user()->id;
+
+        $validator = Validator::make($request->all(),[
+            'first_name' => 'required|min:5',
+            'last_name' => 'required',
+            'email' => 'required|email',
+            'state_id' => 'required',
+            'address' => 'required',
+            'city' => 'required',
+            'zip' => 'required',
+            'mobile' => 'required'     
+        ]);
+
+        if ($validator->passes()) {
+            // $user = User::find($userId);
+            // $user->name = $request->name;
+            // $user->phone = $request->phone;
+            // $user->email = $request->email;
+            // $user->save();
+
+            session()->flash('success', 'Dados básicos atualizados com sucesso!');
+
+            return response()->json([
+                'status' => true,
+                'message' => 'Dados básicos atualizados com sucesso!'
+            ]);
+
+        } else {
+            return response()->json([
+                'status' => false,
+                'errors' => $validator->errors()
+            ]);
+        }
     }
 
     public function logout() {
