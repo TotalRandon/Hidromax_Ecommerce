@@ -46,7 +46,7 @@
                             </address>
                             <strong>Data de Envio: </strong>
                             @if (!empty($order->shipped_date))
-                                {{ \Carbon\Carbon::parse($order->created_at)->locale('pt-BR')->translatedFormat('d M, Y') }}
+                                {{ \Carbon\Carbon::parse($order->shipped_date)->locale('pt-BR')->translatedFormat('d M, Y H:i') }}
                             @else
                                 n/a  
                                 @endif
@@ -55,17 +55,31 @@
                             <div class="col-sm-4 invoice-col">
                                 <b>ID Pedido:</b> {{ $order->id }}<br>
                                 <b>Total:</b> R${{ number_format($order->grand_total, 2, ',', '.') }}<br>
-                                <b>Status:</b> 
+                                <b>Aprovação:</b>
+                                    @if ($order->approval_status == 'awaiting')
+                                        <span class="badge bg-warning text-dark">Aguardando aprovação</span>
+                                    @elseif ($order->approval_status == 'approved')
+                                        <span class="badge bg-success">Aprovado</span>
+                                    @else
+                                        <span class="badge bg-danger">Rejeitado</span>
+                                    @endif
+                                <br>
+                                <b>Entrega:</b>
                                     @if ($order->status == 'pending')
-                                        <span class="badge bg-danger">Pagamento pendente</span>
+                                        <span class="badge bg-secondary">Aguardando separação</span>
                                     @elseif ($order->status == 'shipped')
                                         <span class="badge bg-info">Enviado</span>
                                     @elseif ($order->status == 'cancelled')
                                         <span class="badge bg-danger">Cancelado</span>
                                     @else
-                                        <span class="badge bg-success">Entrege</span>
+                                        <span class="badge bg-success">Entregue</span>
                                     @endif
                                 <br>
+                                <b>Pagamento:</b> {{ $order->payment_status == 'paid' ? 'Pago' : 'Não pago' }}<br>
+                                @if ($order->approver)
+                                    <b>Decisão por:</b> {{ $order->approver->name }}<br>
+                                    <b>Decisão em:</b> {{ optional($order->approval_decided_at)->format('d/m/Y H:i') }}
+                                @endif
                             </div>
                         </div>
                     </div>
@@ -108,16 +122,37 @@
                 </div>
             </div>
             <div class="col-md-3">
-                <div class="card">
-                    <form action="" method="post" name="changeOrderStatusForm" id="changeOrderStatusForm">
+                    @if ($order->approval_status == 'awaiting')
+                    <div class="card">
                         <div class="card-body">
-                            <h2 class="h4 mb-3">Estatus do Pedido</h2>
+                            <h2 class="h4 mb-3">Aprovação do superior</h2>
+                            <p>O pedido não poderá seguir para separação ou entrega até ser aprovado.</p>
+                            <form method="post" id="approvalDecisionForm">
+                                @csrf
+                                <button type="button" class="btn btn-success approval-decision" data-decision="approved">Aprovar pedido</button>
+                                <button type="button" class="btn btn-outline-danger approval-decision" data-decision="rejected">Rejeitar</button>
+                            </form>
+                        </div>
+                    </div>
+                    @endif
+                    <div class="card">
+                    <form action="" method="post" name="changeOrderStatusForm" id="changeOrderStatusForm">
+                        @csrf
+                        <div class="card-body">
+                            <h2 class="h4 mb-3">Etapa da entrega</h2>
                             <div class="mb-3">
                                 <select name="status" id="status" class="form-control">
-                                    <option value="pending" {{ ($order->status == 'pending') ? 'selected' : ''}}>Pagamento pendente</option>
-                                    <option value="shipped" {{ ($order->status == 'shipped') ? 'selected' : ''}}>Enviado</option>
-                                    <option value="delivered" {{ ($order->status == 'delivered') ? 'selected' : ''}}>Entregue</option>
+                                    <option value="pending" {{ ($order->status == 'pending') ? 'selected' : ''}}>Aguardando separação</option>
+                                    <option value="shipped" {{ ($order->status == 'shipped') ? 'selected' : '' }} {{ $order->approval_status != 'approved' ? 'disabled' : '' }}>Enviado</option>
+                                    <option value="delivered" {{ ($order->status == 'delivered') ? 'selected' : '' }} {{ $order->approval_status != 'approved' ? 'disabled' : '' }}>Entregue</option>
                                     <option value="cancelled" {{ ($order->status == 'cancelled') ? 'selected' : ''}}>Cancelado</option>
+                                </select>
+                            </div>
+                            <div class="mb-3">
+                                <label for="payment_status">Situação do pagamento (registro manual)</label>
+                                <select name="payment_status" id="payment_status" class="form-control">
+                                    <option value="not paid" {{ $order->payment_status == 'not paid' ? 'selected' : '' }}>Não pago</option>
+                                    <option value="paid" {{ $order->payment_status == 'paid' ? 'selected' : '' }} {{ $order->approval_status != 'approved' || $order->status == 'cancelled' ? 'disabled' : '' }}>Pago</option>
                                 </select>
                             </div>
                             <div class="mb-3">
@@ -133,7 +168,7 @@
                 <div class="card">
                     <div class="card-body">
                         <form action="" method="post" name="sendInvoiceEmail" id="sendInvoiceEmail">
-                            <h2 class="h4 mb-3">Enviar Fatura Por Email</h2>
+                            <h2 class="h4 mb-3">Enviar resumo do pedido por e-mail</h2>
                             <div class="mb-3">
                                 <select name="userType" id="userType" class="form-control">
                                     <option value="customer">Cliente</option>                                                
@@ -173,11 +208,27 @@
             dataType: 'json',
             success: function(response){
                 window.location.href='{{ route('orders.detail', $order->id) }}';
-            }
+            },
+            error: function(xhr){ alert((xhr.responseJSON && xhr.responseJSON.message) || 'Não foi possível atualizar o pedido.'); }
         });
         }
 
         
+    });
+
+    $('.approval-decision').on('click', function(){
+        const decision = $(this).data('decision');
+        const label = decision === 'approved' ? 'aprovar' : 'rejeitar';
+        if (!confirm('Confirma ' + label + ' este pedido?')) return;
+
+        $.ajax({
+            url: '{{ route('orders.decideApproval', $order->id) }}',
+            type: 'post',
+            data: $('#approvalDecisionForm').serialize() + '&decision=' + encodeURIComponent(decision),
+            dataType: 'json',
+            success: function(){ window.location.reload(); },
+            error: function(xhr){ alert((xhr.responseJSON && xhr.responseJSON.message) || 'Não foi possível registrar a decisão.'); }
+        });
     });
 
     $('#sendInvoiceEmail').submit(function(event){

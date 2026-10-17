@@ -17,13 +17,13 @@ class HomeController extends Controller
         $totalOrders = Order::where('status', '!=', 'cancelled')->count();
         $totalProducts = Product::count();
         $totalCustomers = User::where('role', 1)->count();
-        $totalRevenue = Order::where('status', '!=', 'cancelled')->sum('grand_total');
+        $totalRevenue = Order::where('payment_status', 'paid')->where('status', '!=', 'cancelled')->sum('grand_total');
 
         $startOfMonth = Carbon::now()->startOfMonth()->format('Y-m-d');
         $currentDate = Carbon::now()->format('Y-m-d');
 
         // this month
-        $revenueThisMonth = Order::where('status', '!=', 'cancelled')
+        $revenueThisMonth = Order::where('payment_status', 'paid')->where('status', '!=', 'cancelled')
                         ->whereDate('created_at', '>=', $startOfMonth)
                         ->whereDate('created_at', '<=', $currentDate)
                         ->sum('grand_total');
@@ -32,7 +32,7 @@ class HomeController extends Controller
         $lastMonthEndDate = Carbon::now()->subMonth()->endOfMonth()->format('Y-m-d');
 
         // last month
-        $revenueLastMonth = Order::where('status', '!=', 'cancelled')
+        $revenueLastMonth = Order::where('payment_status', 'paid')->where('status', '!=', 'cancelled')
                         ->whereDate('created_at', '>=', $lastMonthStartDate)
                         ->whereDate('created_at', '<=', $lastMonthEndDate)
                         ->sum('grand_total');
@@ -40,7 +40,7 @@ class HomeController extends Controller
         $lastThirtyDayStartDate = Carbon::now()->subDays(30)->format('Y-m-d');
 
         // 30 days
-        $revenueLastThirtyDays = Order::where('status', '!=', 'cancelled')
+        $revenueLastThirtyDays = Order::where('payment_status', 'paid')->where('status', '!=', 'cancelled')
                         ->whereDate('created_at', '>=', $lastThirtyDayStartDate)
                         ->whereDate('created_at', '<=', $currentDate)
                         ->sum('grand_total');

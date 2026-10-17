@@ -113,13 +113,20 @@
 	
 				<!-- Conta e Carrinho -->
 				<div class="col-lg-3 col-3 d-flex align-items-center justify-content-end">
+					@auth
 					<a href="{{ route('account.profile') }}" class="nav-link text-white me-4">
-						<i class="fa fa-user" style="font-size: 1.5rem;"></i>
+						Minha Conta <i class="fa fa-user" style="font-size: 1.5rem;"></i>
 					</a>
+					@else
+					<a href="{{ route('account.login') }}" class="nav-link text-white me-4">
+						Login ou Registrar <i class="fa fa-user" style="font-size: 1.5rem;"></i>
+					</a>
+					@endauth
+
 					<a href="{{ route('front.cart') }}" class="position-relative">
 						<i class="fas fa-shopping-cart text-white" style="font-size: 1.5rem;"></i>
-						<span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
-							3
+						{{-- <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+							3 --}}
 							<span class="visually-hidden">itens no carrinho</span>
 						</span>
 					</a>
