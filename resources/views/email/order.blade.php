@@ -19,8 +19,9 @@
 <body>
     <div class="container my-4">
         @if ($mailData['userType'] == 'customer')
-            <h1 class="display-4">Obrigado por fazer o pedido</h1>
+            <h1 class="display-4">Recebemos seu pedido</h1>
             <h2 class="h4">Segue o código do pedido: #{{ $mailData['order']->id }}</h2>
+            <p>Recebemos seu pedido. Nossa equipe vai analisá-lo e entrará em contato para combinar o pagamento e os próximos passos. Este e-mail não confirma pagamento nem início da entrega.</p>
         @else
             <h1 class="display-4">Você recebeu um novo pedido:</h1>
             <h2 class="h4">ID Pedido: #{{ $mailData['order']->id }}</h2>

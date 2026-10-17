@@ -43,14 +43,18 @@
                                             </td>
                                             <td>{{ \Carbon\Carbon::parse($order->created_at)->locale('pt-BR')->translatedFormat('d M, Y') }}</td>
                                             <td>
-                                                @if ($order->status == 'pending')
-                                                    <span class="badge bg-danger">Pagamento pendente</span>
+                                                @if ($order->approval_status == 'awaiting')
+                                                    <span class="badge bg-warning text-dark">Em análise</span>
+                                                @elseif ($order->approval_status == 'rejected')
+                                                    <span class="badge bg-danger">Pedido rejeitado</span>
+                                                @elseif ($order->status == 'pending')
+                                                    <span class="badge bg-info">Aprovado, aguardando separação</span>
                                                 @elseif ($order->status == 'shipped')
                                                     <span class="badge bg-info">Enviado</span>
                                                 @elseif ($order->status == 'cancelled')
                                                     <span class="badge bg-danger">Cancelado</span>
                                                 @else
-                                                    <span class="badge bg-success">Entrege</span>
+                                                    <span class="badge bg-success">Entregue</span>
                                                 @endif
                                             </td>
                                             <td>R$ {{ number_format($order->grand_total, 2, ',', '.') }}</td>

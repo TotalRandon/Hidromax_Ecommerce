@@ -59,6 +59,7 @@
                                 <div class="mb-3">
                                     <input type="text" name="city" id="city" class="form-control" placeholder="Cidade" value="{{ (!empty($customerAddress)) ? $customerAddress->city : '' }}">
                                     <p></p>
+                                    <small class="form-text text-muted">Entrega gratuita em Americana, Nova Odessa, Piracicaba, Limeira, Sumaré, Monte Mor e Iracemápolis (SP).</small>
                                 </div>            
                             </div>
                             <div class="col-md-4">
@@ -101,19 +102,19 @@
                 </div>                    
                 <div class="card cart-summary">
                     <div class="card-body">
-                        @foreach (Cart::content() as $item)
+                        @foreach ($checkoutItems as $item)
                         <div class="d-flex justify-content-between align-items-center pb-2">
                             <div class="h6 mb-0 text-left flex-grow-1">
-                                <span class="mr-1">{{ $item->name }}</span>
+                                <span class="mr-1">{{ $item['name'] }}</span>
                                 <span class="mx-1">X</span>
-                                <span class="ml-1">{{ $item->qty }}</span>
+                                <span class="ml-1">{{ $item['qty'] }}</span>
                             </div>
-                            <div class="h6 mb-0 text-right">R$ {{ number_format($item->price * $item->qty, 2, ',', '.') }}</div>
+                            <div class="h6 mb-0 text-right">R$ {{ $item['total'] }}</div>
                         </div>
                         @endforeach
                         <div class="d-flex justify-content-between align-items-center pt-3 border-top mt-3">
                             <div class="h6 mb-0 text-left flex-grow-1"><strong>Subtotal</strong></div>
-                            <div class="h6 mb-0 text-right"><strong>R$ {{ Cart::subtotal() }}</strong></div>
+                            <div class="h6 mb-0 text-right"><strong>R$ {{ number_format((float) $grandTotal, 2, ',', '.') }}</strong></div>
                         </div>
                         <div class="d-flex justify-content-between align-items-center mt-2">
                             <div class="h6 mb-0 text-left flex-grow-1"><strong>Entrega</strong></div>
@@ -125,82 +126,12 @@
                         </div>                            
                     </div>
                 </div>
-                <div class="card payment-form ">   
-                    <h3 class="card-title h5 mb-3">Metodo de pagamento</h3>
-                    <div>
-                        <input type="radio" name="payment_method" value="cod" id="payment_method_1">
-                        <label for="payment_method_1" class="form-check-label">Pagamento na entrega</label>
-                    <div>
-                        <input type="radio" name="payment_method" value="pix" id="payment_method_3">
-                        <label for="payment_method_3" class="form-check-label">Pix</label>
-                    </div>
-                    <div>
-                        <input type="radio" name="payment_method" value="Boleto" id="payment_method_4">
-                        <label for="payment_method_4" class="form-check-label">Boleto Bancario</label>
-                    </div>
-                    <div>
-                        <input type="radio" name="payment_method" value="stripe" id="payment_method_2">
-                        <label for="payment_method_2" class="form-check-label">Cartão de credito</label>
-                    </div>
-
-                    <div class="card_body p-0 d-none mb-2" id="cod-payment-form">
-                        <div class="mb-3">
-                            <p>Pagamento deve ser pago diretamente na entrega.</p>
-                        </div>
-                        <div class="pt-4">
-                            <button type="submit" class="btn-dark btn btn-block w-100">Finalizar</button>
-                        </div>
-                    </div>
-
-                    <div class="card_body p-0 d-none mb-2" id="pix-payment-form">
-                        <div class="mb-3">
-                            <p>Ao escolher o método pix, você será redirecionado a uma página com QRCode para efetuar o pagamento.</p>
-                        </div>
-                        <div class="pt-4">
-                            <button type="submit" class="btn-dark btn btn-block w-100">Finalizar</button>
-                        </div>
-                    </div>
-
-                    <div class="card_body p-0 d-none mb-2" id="boleto-payment-form">
-                        <div class="mb-3">
-                            <p>Ao escolher o método boleto, você será redirecionado a uma página com arquivo de boleto bancario para efetuar o pagamento.</p>
-                        </div>
-                        <div class="pt-4">
-                            <button type="submit" class="btn-dark btn btn-block w-100">Finalizar</button>
-                        </div>
-                    </div>
-                    
-                    <div class="card-body p-0 d-none mb-2" id="card-payment-form">
-                        <div class="mb-3">
-                            <label for="card_number" class="mb-2">Número do cartão</label>
-                            <input type="text" name="card_number" id="card_number" placeholder="Número do cartão válido" class="form-control">
-                        </div>
-                        <div class="mb-3">
-                            <label for="card_name" class="mb-2">Nome impresso no cartão</label>
-                            <input type="text" name="card_name" id="card_name" placeholder="Nome impresso no cartão" class="form-control">
-                        </div>
-                        <div class="row">
-                            <div class="col-md-4">
-                                <label for="expiry_date" class="mb-2">Validade</label>
-                                <input type="text" name="expiry_date" id="expiry_date" placeholder="MM/YYYY" class="form-control">
-                            </div>
-                            <div class="col-md-4">
-                                <label for="cvv" class="mb-2">CVV</label>
-                                <input type="text" name="cvv" id="cvv" placeholder="123" class="form-control">
-                            </div>
-                            <div class="col-md-4">
-                                <label for="cpf_cnpj" class="mb-2">CPF/CNPJ do titular</label>
-                                <input type="text" name="cpf_cnpj" id="cpf_cnpj" placeholder="CPF/CNPJ do titular" class="form-control">
-                            </div>
-                        </div>
-                        <div class="mb-3">
-                            <label for="birth_date" class="mb-2">Data de nascimento</label>
-                            <input type="text" name="birth_date" id="birth_date" placeholder="DD/MM/YYYY" class="form-control">
-                        </div>
-                        <div class="pt-4">
-                            <button type="submit" class="btn-dark btn btn-block w-100">Finalizar</button>
-                        </div>
-                    </div>                        
+                <div class="card payment-form p-3">
+                    <h3 class="card-title h5 mb-3">Pagamento</h3>
+                    <p>Depois do envio, nossa equipe analisará o pedido e entrará em contato para combinar o pagamento e os próximos passos.</p>
+                    <div id="deliveryMessage" class="small text-muted mb-3" role="status">Informe uma cidade atendida em São Paulo para confirmar a entrega gratuita.</div>
+                    <div id="checkoutMessage" class="small text-danger mb-3" role="alert"></div>
+                    <button type="submit" class="btn-dark btn btn-block w-100">Finalizar pedido</button>
                 </div>
             </div>
         </div>
@@ -212,47 +143,11 @@
 @section('customJs')
 <script>
     $(document).ready(function() {
-        function hideAllPaymentForms() {
-            $("#cod-payment-form").addClass('d-none');
-            $("#card-payment-form").addClass('d-none');
-            $("#pix-payment-form").addClass('d-none');
-            $("#boleto-payment-form").addClass('d-none');
-            // Adicione aqui outros formulários de pagamento, se houver.
-        }
-
-        // Mostrar/ocultar o formulário de pagamento
-        $("#payment_method_1").click(function() {
-            hideAllPaymentForms();
-            if ($(this).is(":checked")) {
-                $("#cod-payment-form").removeClass('d-none');
-            }
-        }); 
-
-        $("#payment_method_2").click(function() {
-            hideAllPaymentForms();
-            if ($(this).is(":checked")) {
-                $("#card-payment-form").removeClass('d-none');
-            }
-        });
-
-        $("#payment_method_3").click(function() {
-            hideAllPaymentForms();
-            if ($(this).is(":checked")) {
-                $("#pix-payment-form").removeClass('d-none');
-            }
-        });
-
-        $("#payment_method_4").click(function() {
-            hideAllPaymentForms();
-            if ($(this).is(":checked")) {
-                $("#boleto-payment-form").removeClass('d-none');
-            }
-        });
-
-        // Submissão do formulário de pedido
         $("#orderForm").submit(function(event) {
             event.preventDefault();
-            $('button[type="submit"]').prop('disabled', true);
+            var submitButton = $(this).find('button[type="submit"]');
+            $('#checkoutMessage').empty();
+            submitButton.prop('disabled', true);
 
             $.ajax({
                 url: '{{ route("front.processCheckout") }}',
@@ -260,71 +155,49 @@
                 data: $(this).serialize(),
                 dataType: 'json',
                 success: function(response) {
-                    $("#orderForm .form-control").removeClass('is-invalid');
-                    $("#orderForm .invalid-feedback").html('');
-
-                    var errors = response.errors;
-                    $('button[type="submit"]').prop('disabled', false);
-
-                    if (response.status == false) {
-                        if (errors.first_name) {
-                            $("#first_name").addClass('is-invalid').siblings("p").addClass('invalid-feedback').html(errors.first_name)
-                        }
-                        if (errors.last_name) {
-                            $("#last_name").addClass('is-invalid').siblings("p").addClass('invalid-feedback').html(errors.last_name)
-                        }
-                        if (errors.email) {
-                            $("#email").addClass('is-invalid').siblings("p").addClass('invalid-feedback').html(errors.email)
-                        }
-                        if (errors.address) {
-                            $("#address").addClass('is-invalid').siblings("p").addClass('invalid-feedback').html(errors.address)
-                        }
-                        if (errors.apartment) {
-                            $("#apartment").addClass('is-invalid').siblings("p").addClass('invalid-feedback').html(errors.apartment)
-                        }
-                        if (errors.city) {
-                            $("#city").addClass('is-invalid').siblings("p").addClass('invalid-feedback').html(errors.city)
-                        }
-                        if (errors.state_id) {
-                            $("#state_id").addClass('is-invalid').siblings("p").addClass('invalid-feedback').html(errors.state_id)
-                        }
-                        if (errors.zip) {
-                            $("#zip").addClass('is-invalid').siblings("p").addClass('invalid-feedback').html(errors.zip)
-                        }
-                        if (errors.mobile) {
-                            $("#mobile").addClass('is-invalid').siblings("p").addClass('invalid-feedback').html(errors.mobile)
-                        }
-                    } else {
-                        window.location.href = response.redirect_url;                    }
+                    window.location.href = response.redirect_url;
+                },
+                error: function(xhr) {
+                    submitButton.prop('disabled', false);
+                    $("#orderForm .form-control").removeClass('is-invalid').siblings('p').empty().removeClass('invalid-feedback');
+                    var response = xhr.responseJSON || {};
+                    var errors = response.errors || {};
+                    Object.keys(errors).forEach(function(field) {
+                        var input = $('#orderForm [name="' + field + '"]');
+                        input.addClass('is-invalid').siblings('p').addClass('invalid-feedback').text(errors[field][0]);
+                    });
+                    if (response.message && Object.keys(errors).length === 0) {
+                        $('#checkoutMessage').text(response.message);
+                    }
                 }
             });
         });
 
-        // Atualizar o resumo do pedido ao mudar o estado
-        $("#state_id").change(function() {
-            var stateId = $(this).val();
-            if (stateId) {
-                $.ajax({
-                    url: '{{ route("front.getOrderSummery") }}',
-                    type: 'post',
-                    data: {
-                        _token: '{{ csrf_token() }}', // Inclui o token CSRF
-                        state_id: stateId
-                    },
-                    dataType: 'json',
-                    success: function(response) {
-                        if (response.status == true) {
-                            $("#shippingAmount").html('R$ ' + response.shippingCharge);
-                            $("#grandTotal").html('R$ ' + response.grandTotal);
-                        }
-                    }
-                });
-            } else {
-                $("#shippingAmount").html('R$ 0,00');
-                $("#grandTotal").html('R$ ' + '{{ Cart::subtotal() }}');
-            }
+        function updateDeliveryMessage() {
+            $.ajax({
+                url: '{{ route("front.getOrderSummery") }}',
+                type: 'post',
+                data: {
+                    _token: '{{ csrf_token() }}',
+                    state_id: $('#state_id').val(),
+                    city: $('#city').val()
+                },
+                dataType: 'json',
+                success: function(response) {
+                    $('#shippingAmount').text('R$ ' + response.shippingCharge);
+                    $('#grandTotal').text('R$ ' + response.grandTotal);
+                    $('#deliveryMessage').text(response.deliveryMessage)
+                        .toggleClass('text-danger', !response.deliveryAvailable)
+                        .toggleClass('text-success', response.deliveryAvailable);
+                }
+            });
+        }
+
+        $('#state_id, #city').on('change blur', updateDeliveryMessage);
+        if ($('#city').val()) {
+            updateDeliveryMessage();
+        }
         });
-    });
 </script>
 
 @endsection

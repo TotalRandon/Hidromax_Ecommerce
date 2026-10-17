@@ -8,7 +8,6 @@ use App\Http\Controllers\admin\OrderController;
 use App\Http\Controllers\admin\ProductController;
 use App\Http\Controllers\admin\ProductImageController;
 use App\Http\Controllers\admin\ProductSubCategoryController;
-use App\Http\Controllers\admin\ShippingController;
 use App\Http\Controllers\admin\SubCategoryController;
 use App\Http\Controllers\admin\TempImagesController;
 use App\Http\Controllers\AuthController;
@@ -122,17 +121,11 @@ Route::group(['prefix' => 'admin'], function(){
 
         Route::get('/product-subcategories', [ProductSubCategoryController::class, 'index'])->name('product-subcategories.index');
 
-        // Rotas de shipping
-        Route::get('/shipping/create', [ShippingController::class, 'create'])->name('shipping.create');
-        Route::post('/shipping', [ShippingController::class, 'store'])->name('shipping.store');
-        Route::get('/shipping/{id}', [ShippingController::class, 'edit'])->name('shipping.edit');
-        Route::put('/shipping/{id}', [ShippingController::class, 'update'])->name('shipping.update');
-        Route::delete('/shipping/{id}', [ShippingController::class, 'destroy'])->name('shipping.delete');
-
         // Rotas de pedidos
         Route::get('/orders', [OrderController::class, 'index'])->name('orders.index');
         Route::get('/orders/{id}', [OrderController::class, 'detail'])->name('orders.detail');
         Route::post('/order/change-status/{id}', [OrderController::class, 'changeOrderStatus'])->name('orders.changeOrderStatus');
+        Route::post('/order/approval/{id}', [OrderController::class, 'decideApproval'])->name('orders.decideApproval');
         Route::post('/order/send-email/{id}', [OrderController::class, 'sendInvoiceEmail'])->name('orders.sendInvoiceEmail');
 
         //temp-images.create

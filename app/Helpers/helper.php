@@ -24,7 +24,7 @@ use Illuminate\Support\Facades\Mail;
         $order = Order::where('id', $orderId)->with('items')->first();
 
         if($userType == 'customer') {
-            $subject = 'Obrigado por comprar na Hidromax';
+            $subject = 'Recebemos seu pedido na Hidromax';
             $email = $order->email;
         } else {
             $subject = 'Você recebeu um novo pedido!';

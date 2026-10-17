@@ -63,7 +63,7 @@
                 <div class="small-box card">
                     <div class="inner">
                         <h3>R$ {{number_format($totalRevenue, 2, ',', '.') }}</h3>
-                        <p>Total de vendas</p>
+                        <p>Total de vendas pagas</p>
                     </div>
                     <div class="icon">
                         <i class="ion ion-person-add"></i>
@@ -76,7 +76,7 @@
                 <div class="small-box card">
                     <div class="inner">
                         <h3>R$ {{number_format($revenueThisMonth, 2, ',', '.') }}</h3>
-                        <p>Receita deste mês</p>
+                        <p>Vendas pagas deste mês</p>
                     </div>
                     <div class="icon">
                         <i class="ion ion-person-add"></i>
@@ -89,7 +89,7 @@
                 <div class="small-box card">
                     <div class="inner">
                         <h3>R$ {{number_format($revenueLastMonth, 2, ',', '.') }}</h3>
-                        <p>Receita do mês passado</p>
+                        <p>Vendas pagas do mês passado</p>
                     </div>
                     <div class="icon">
                         <i class="ion ion-person-add"></i>
@@ -102,7 +102,7 @@
                 <div class="small-box card">
                     <div class="inner">
                         <h3>R$ {{number_format($revenueLastThirtyDays, 2, ',', '.') }}</h3>
-                        <p>Receita dos últimos 30 dias</p>
+                        <p>Vendas pagas nos últimos 30 dias</p>
                     </div>
                     <div class="icon">
                         <i class="ion ion-person-add"></i>

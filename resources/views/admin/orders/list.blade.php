@@ -48,7 +48,8 @@
                             <th>Nome</th>
                             <th>Email</th>
                             <th>Celular/Telefone</th>
-                            <th>Estatus</th>
+                            <th>Aprovação</th>
+                            <th>Entrega</th>
                             <th>Valor</th>
                             <th>Data de compra</th>
                         </tr>
@@ -62,14 +63,23 @@
                         <td>{{ $order->email }}</td>
                         <td>{{ $order->mobile }}</td>
                         <td>
+                            @if ($order->approval_status == 'awaiting')
+                                <span class="badge bg-warning text-dark">Aguardando aprovação</span>
+                            @elseif ($order->approval_status == 'approved')
+                                <span class="badge bg-success">Aprovado</span>
+                            @else
+                                <span class="badge bg-danger">Rejeitado</span>
+                            @endif
+                        </td>
+                        <td>
                             @if ($order->status == 'pending')
-                                <span class="badge bg-danger">Pagamento pendente</span>
+                                <span class="badge bg-secondary">Aguardando separação</span>
                             @elseif ($order->status == 'shipped')
                                 <span class="badge bg-info">Enviado</span>
                             @elseif ($order->status == 'cancelled')
                                 <span class="badge bg-danger">Cancelado</span>
                             @else
-                                <span class="badge bg-success">Entrege</span>
+                                <span class="badge bg-success">Entregue</span>
                             @endif
                         </td>
                         <td>R$ {{ number_format($order->grand_total, 2, ',', '.') }}</td>

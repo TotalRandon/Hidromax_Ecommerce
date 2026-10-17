@@ -10,7 +10,8 @@
                 </div>
             @endif
             <h1>Obrigado!</h1>
-            <p>Seu pedido #{{ $id }}</p>
+            <p>Recebemos seu pedido #{{ $order->id }}. Nossa equipe vai analisá-lo e entrará em contato para combinar o pagamento e os próximos passos.</p>
+            <p>O pedido ainda não confirma o pagamento nem o início da entrega.</p>
         </div>
     </section>
 @endsection

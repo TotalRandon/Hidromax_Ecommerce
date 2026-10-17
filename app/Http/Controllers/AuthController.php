@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Models\CustomerAddress;
 use App\Models\Order;
-use App\Models\OrderItem;
 use App\Models\States;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -126,22 +125,32 @@ class AuthController extends Controller
         $userId = Auth::user()->id;
 
         $validator = Validator::make($request->all(),[
-            'first_name' => 'required|min:5',
-            'last_name' => 'required',
-            'email' => 'required|email',
-            'state_id' => 'required',
-            'address' => 'required',
-            'city' => 'required',
-            'zip' => 'required',
-            'mobile' => 'required'     
+            'first_name' => 'required|string|min:2|max:100',
+            'last_name' => 'required|string|max:100',
+            'email' => 'required|email|max:255',
+            'state_id' => 'required|exists:states,id',
+            'address' => 'required|string|max:1000',
+            'apartment' => 'nullable|string|max:255',
+            'city' => 'required|string|max:100',
+            'zip' => 'required|string|regex:/^[0-9.\- ]{8,10}$/',
+            'mobile' => 'required|string|min:10|max:20',
         ]);
 
         if ($validator->passes()) {
-            // $user = User::find($userId);
-            // $user->name = $request->name;
-            // $user->phone = $request->phone;
-            // $user->email = $request->email;
-            // $user->save();
+            CustomerAddress::updateOrCreate(
+                ['user_id' => $userId],
+                [
+                    'first_name' => $request->first_name,
+                    'last_name' => $request->last_name,
+                    'email' => $request->email,
+                    'mobile' => $request->mobile,
+                    'address' => $request->address,
+                    'apartment' => $request->apartment,
+                    'city' => trim($request->city),
+                    'state_id' => $request->state_id,
+                    'zip' => preg_replace('/\D/', '', $request->zip),
+                ]
+            );
 
             session()->flash('success', 'Dados básicos atualizados com sucesso!');
 
@@ -179,19 +188,17 @@ class AuthController extends Controller
     }
 
     public function orderDetail($id) {
-        $data = [];
         $user = Auth::user();
 
-        $order = Order::where('user_id', $user->id)->where('id', $id)->first();
+        $order = Order::with('items')
+            ->where('user_id', $user->id)
+            ->whereKey($id)
+            ->firstOrFail();
 
-        $data['order'] = $order;
-
-        $orderItems = OrderItem::where('order_id', $id)->get();
-        $data['orderItems'] = $orderItems;
-
-        $orderItemsCount = OrderItem::where('order_id', $id)->count();
-        $data['orderItemsCount'] = $orderItemsCount;
-
-        return view('front.account.order-detail', $data);
+        return view('front.account.order-detail', [
+            'order' => $order,
+            'orderItems' => $order->items,
+            'orderItemsCount' => $order->items->count(),
+        ]);
     }
 }
